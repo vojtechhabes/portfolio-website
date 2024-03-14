@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="cs">
   <head>
-    <%-include("./partials/head")%>
+    <%-include("./partials/head", { title: "Vojtěch Habeš" })%>
   </head>
   <body>
-    <h1><%=title%></h1>
+    <%-include("./partials/titleSection", { title: "Vojtěch Habeš", description:
+    "Webový vývojář<br />UI/UX designér", image:
+    "https://upload.wikimedia.org/wikipedia/commons/b/bf/Bucephala-albeola-010.jpg"
+    })%>
   </body>
 </html>

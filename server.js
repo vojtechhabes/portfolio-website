@@ -1,10 +1,12 @@
 const express = require("express");
-const app = express();
 require("dotenv").config();
 
-app.get("/", function (req, res) {
-  res.send("Hello World");
-});
+const app = express();
+
+app.set("view engine", "ejs");
+
+const mainRouter = require("./routers/main");
+app.use("/", mainRouter);
 
 const startServer = async () => {
   await app.listen(process.env.PORT);

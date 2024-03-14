@@ -4,6 +4,7 @@ require("dotenv").config();
 const app = express();
 
 app.set("view engine", "ejs");
+app.use(express.static("public"));
 
 const mainRouter = require("./routers/main");
 app.use("/", mainRouter);

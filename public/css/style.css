@@ -1,3 +1,100 @@
+:root {
+  --primary-color: #b5d438;
+  --background-color: #0a0a0a;
+  --on-primary-color: #0a0a0a;
+  --on-background-color: #ffffff;
+  --on-background-color-dim: #ffffff80;
+  --on-primary-color-dim: #0a0a0a80;
+}
+
 body {
   font-family: "Bricolage Grotesque", sans-serif;
+  font-size: min(2vw, 22px);
+  background-color: var(--background-color);
+  color: var(--on-background-color);
+}
+
+/* Layout */
+
+.title-section {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  min-height: 100vh;
+  height: auto;
+}
+
+.title-section > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.title-section > .text {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+  padding: 2em;
+}
+
+body > main > article.primary {
+  background-color: var(--primary-color);
+  color: var(--on-primary-color);
+}
+
+body > main > article.normal {
+  background-color: var(--background-color);
+  color: var(--on-background-color);
+}
+
+body > main > article {
+  padding: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body > main > article > main {
+  max-width: 1200px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  grid-template-rows: min-content min-content;
+  gap: 2em;
+}
+
+body > main > article > main > .content {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+body > main > article > main > .action {
+  display: flex;
+  align-items: flex-end;
+  grid-column: 2;
+  grid-row: 2;
+}
+
+/* Texts */
+
+h1 {
+  font-size: 8em;
+  font-weight: 400;
+  color: var(--primary-color);
+  line-height: 0.9;
+}
+
+p {
+  font-size: 1.5em;
+  font-weight: 200;
+}
+
+h2 {
+  font-size: 4em;
+  font-weight: 400;
+}
+
+.title-description {
+  font-size: 3em;
+  font-weight: 200;
 }

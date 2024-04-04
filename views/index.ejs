@@ -4,9 +4,29 @@
     <%-include("./partials/head", { title: "Vojtěch Habeš" })%>
   </head>
   <body>
-    <%-include("./partials/titleSection", { title: "Vojtěch Habeš", description:
-    "Webový vývojář<br />UI/UX designér", image:
-    "https://upload.wikimedia.org/wikipedia/commons/b/bf/Bucephala-albeola-010.jpg"
+    <%-include("./partials/titleSection", { title: "Vojtěch<br />Habeš",
+    description: "Webový vývojář<br />UI/UX designér", image: "/images/ja.JPG"
     })%>
+
+    <main>
+      <article class="primary">
+        <main>
+          <section class="content">
+            <h2>O mně</h2>
+            <p>
+              Jsem studentem oboru Webové a softwarové inženýrství na Fakultě
+              informačních technologií Vysokého učení technického v Brně. Mým
+              cílem je stát se webovým vývojářem a UI/UX designérem. Mým
+              oblíbeným programovacím jazykem je JavaScript a jeho framework
+              React. Věnuji se také tvorbě grafických návrhů a designu webových
+              stránek.
+            </p>
+          </section>
+          <section class="action">
+            <a href="/portfolio" class="button">Portfolio</a>
+          </section>
+        </main>
+      </article>
+    </main>
   </body>
 </html>

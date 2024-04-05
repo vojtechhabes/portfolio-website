@@ -84,7 +84,7 @@ body > main > article > main > .action {
   display: flex;
   flex-direction: column;
   padding: 2em 0;
-  border-bottom: 1px solid var(--on-background-color-dim);
+  border-bottom: 2px solid var(--on-background-color-dim);
   color: var(--on-background-color);
 }
 
@@ -166,9 +166,14 @@ form input {
   line-height: 1.2;
   padding: 0.5em 0;
   border: none;
-  border-bottom: 1px solid var(--on-background-color-dim);
+  border-bottom: 2px solid var(--on-background-color-dim);
   background-color: transparent;
   outline: none;
+  transition: border-bottom 0.3s;
+}
+
+form input:focus {
+  border-bottom: 2px solid var(--on-background-color);
 }
 
 form input::placeholder {
@@ -176,7 +181,11 @@ form input::placeholder {
 }
 
 form.on-primary input {
-  border-bottom: 1px solid var(--background-color-dim);
+  border-bottom: 2px solid var(--background-color-dim);
+}
+
+form.on-primary input:focus {
+  border-bottom: 2px solid var(--background-color);
 }
 
 form.on-primary input::placeholder {
@@ -190,13 +199,18 @@ form textarea {
   line-height: 1.2;
   padding: 0.5em 0;
   border: none;
-  border-bottom: 1px solid var(--on-background-color-dim);
+  border-bottom: 2px solid var(--on-background-color-dim);
   background-color: transparent;
   outline: none;
   display: block;
   width: 100%;
   resize: none;
   overflow: hidden;
+  transition: border-bottom 0.3s;
+}
+
+form textarea:focus {
+  border-bottom: 2px solid var(--on-background-color);
 }
 
 form textarea::placeholder {
@@ -204,7 +218,11 @@ form textarea::placeholder {
 }
 
 form.on-primary textarea {
-  border-bottom: 1px solid var(--background-color-dim);
+  border-bottom: 2px solid var(--background-color-dim);
+}
+
+form.on-primary textarea:focus {
+  border-bottom: 2px solid var(--background-color);
 }
 
 form.on-primary textarea::placeholder {
@@ -236,6 +254,11 @@ button {
   font-size: 1.4em;
   font-weight: 300;
   line-height: 1.2;
+  transition: transform 0.3s;
+}
+
+.button.big:hover {
+  transform: scale(1.1);
 }
 
 .button.primary {

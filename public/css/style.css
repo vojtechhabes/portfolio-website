@@ -8,7 +8,7 @@
 
 body {
   font-family: "Bricolage Grotesque", sans-serif;
-  font-size: min(2vw, 22px);
+  font-size: min(1.5vw, 22px);
   background-color: var(--background-color);
   color: var(--on-background-color);
 }
@@ -54,11 +54,12 @@ body > main > article {
 }
 
 body > main > article > main {
-  max-width: 1200px;
+  max-width: 1300px;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr min-content;
   grid-template-rows: min-content min-content;
+  row-gap: 2em;
 }
 
 body > main > article > main > .content {
@@ -77,13 +78,12 @@ body > main > article > main > .action {
 .projects-list {
   display: flex;
   flex-direction: column;
-  gap: 2em;
 }
 
 .projects-list article {
   display: flex;
   flex-direction: column;
-  padding-bottom: 2em;
+  padding: 2em 0;
   border-bottom: 1px solid var(--on-background-color-dim);
   color: var(--on-background-color);
 }
@@ -104,6 +104,12 @@ h1 {
 p {
   font-size: 1.4em;
   font-weight: 200;
+  line-height: 1.2;
+}
+
+label {
+  font-size: 1.4em;
+  font-weight: 300;
   line-height: 1.2;
 }
 
@@ -139,12 +145,84 @@ a {
   text-decoration: none;
 }
 
+/* Forms */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+form input {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 1.4em;
+  font-weight: 300;
+  line-height: 1.2;
+  padding: 0.5em 0;
+  border: none;
+  border-bottom: 1px solid var(--on-background-color-dim);
+  background-color: transparent;
+  outline: none;
+}
+
+form input::placeholder {
+  color: var(--on-background-color-dim);
+}
+
+form.on-primary input {
+  border-bottom: 1px solid var(--background-color-dim);
+}
+
+form.on-primary input::placeholder {
+  color: var(--background-color-dim);
+}
+
+form textarea {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 1.4em;
+  font-weight: 300;
+  line-height: 1.2;
+  padding: 0.5em 0;
+  border: none;
+  border-bottom: 1px solid var(--on-background-color-dim);
+  background-color: transparent;
+  outline: none;
+  display: block;
+  width: 100%;
+  resize: none;
+  overflow: hidden;
+}
+
+form textarea::placeholder {
+  color: var(--on-background-color-dim);
+}
+
+form.on-primary textarea {
+  border-bottom: 1px solid var(--background-color-dim);
+}
+
+form.on-primary textarea::placeholder {
+  color: var(--background-color-dim);
+}
+
 /* Buttons */
+
+button {
+  font-family: "Bricolage Grotesque", sans-serif;
+}
 
 .button {
   text-decoration: none;
   display: flex;
   box-sizing: border-box;
+  border: none;
+  cursor: pointer;
 }
 
 .button.big {

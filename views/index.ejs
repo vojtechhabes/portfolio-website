@@ -65,6 +65,70 @@
           </section>
         </main>
       </article>
+
+      <article class="primary">
+        <main>
+          <section class="content">
+            <h2>
+              Máte <span class="highlight">nápad</span>? Díky mně se může stát
+              <span class="highlight">skutečností</span>.
+            </h2>
+
+            <form id="contact-form" class="on-primary">
+              <div>
+                <label for="name">Jak se jmenujete?</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Vaše jméno"
+                />
+              </div>
+
+              <div>
+                <label for="email">Jaký je Váš email?</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Váš email"
+                />
+              </div>
+
+              <div>
+                <label for="message">Krátce popište Vaši představu.</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  placeholder="Vaše zpráva"
+                  rows="1"
+                ></textarea>
+              </div>
+            </form>
+          </section>
+          <section class="action">
+            <button
+              class="button big secondary"
+              type="submit"
+              form="contact-form"
+            >
+              Odeslat zprávu
+            </button>
+          </section>
+        </main>
+      </article>
     </main>
+
+    <script>
+      const textAreas = document.querySelectorAll("textarea");
+
+      for (const textArea of textAreas) {
+        textArea.style.height = textArea.scrollHeight + "px";
+        textArea.addEventListener("input", () => {
+          textArea.style.height = "auto";
+          textArea.style.height = textArea.scrollHeight + "px";
+        });
+      }
+    </script>
   </body>
 </html>

@@ -41,7 +41,7 @@ body > main > article.primary {
   color: var(--background-color);
 }
 
-body > main > article.normal {
+body > main > article.secondary {
   background-color: var(--background-color);
   color: var(--on-background-color);
 }
@@ -74,6 +74,24 @@ body > main > article > main > .action {
   grid-row: 2;
 }
 
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.projects-list article {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 2em;
+  border-bottom: 1px solid var(--on-background-color-dim);
+  color: var(--on-background-color);
+}
+
+.projects-list article > h3 {
+  color: var(--primary-color);
+}
+
 /* Texts */
 
 h1 {
@@ -92,15 +110,33 @@ p {
 h2 {
   font-size: 4em;
   font-weight: 300;
+  line-height: 1;
+}
+
+h3 {
+  font-size: 2.8em;
+  font-weight: 300;
+  line-height: 1.2;
 }
 
 .title-description {
-  font-size: 3em;
+  font-size: 2.8em;
   font-weight: 200;
 }
 
 .highlight {
   text-decoration: underline;
+}
+
+.text-dim {
+  font-size: 1.4em;
+  font-weight: 200;
+  line-height: 1.2;
+  color: var(--on-background-color-dim);
+}
+
+a {
+  text-decoration: none;
 }
 
 /* Buttons */
@@ -113,8 +149,8 @@ h2 {
 
 .button.big {
   border-radius: 100%;
-  width: 7em;
-  height: 7em;
+  width: 7.2em;
+  height: 7.2em;
   padding: 1em;
   justify-content: center;
   align-items: center;

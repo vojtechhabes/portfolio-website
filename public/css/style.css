@@ -1,10 +1,9 @@
 :root {
   --primary-color: #b5d438;
   --background-color: #0a0a0a;
-  --on-primary-color: #0a0a0a;
   --on-background-color: #ffffff;
   --on-background-color-dim: #ffffff80;
-  --on-primary-color-dim: #0a0a0a80;
+  --background-color-dim: #0a0a0a80;
 }
 
 body {
@@ -34,11 +33,12 @@ body {
   flex-direction: column;
   margin-top: auto;
   padding: 2em;
+  gap: 2em;
 }
 
 body > main > article.primary {
   background-color: var(--primary-color);
-  color: var(--on-primary-color);
+  color: var(--background-color);
 }
 
 body > main > article.normal {
@@ -47,7 +47,7 @@ body > main > article.normal {
 }
 
 body > main > article {
-  padding: 2em;
+  padding: 3em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,13 +59,12 @@ body > main > article > main {
   display: grid;
   grid-template-columns: 1fr min-content;
   grid-template-rows: min-content min-content;
-  gap: 2em;
 }
 
 body > main > article > main > .content {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 2em;
 }
 
 body > main > article > main > .action {
@@ -79,22 +78,58 @@ body > main > article > main > .action {
 
 h1 {
   font-size: 8em;
-  font-weight: 400;
+  font-weight: 300;
   color: var(--primary-color);
   line-height: 0.9;
 }
 
 p {
-  font-size: 1.5em;
+  font-size: 1.4em;
   font-weight: 200;
+  line-height: 1.2;
 }
 
 h2 {
   font-size: 4em;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .title-description {
   font-size: 3em;
   font-weight: 200;
+}
+
+.highlight {
+  text-decoration: underline;
+}
+
+/* Buttons */
+
+.button {
+  text-decoration: none;
+  display: flex;
+  box-sizing: border-box;
+}
+
+.button.big {
+  border-radius: 100%;
+  width: 7em;
+  height: 7em;
+  padding: 1em;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.button.primary {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+}
+
+.button.secondary {
+  background-color: var(--background-color);
+  color: var(--primary-color);
 }

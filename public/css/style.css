@@ -6,9 +6,12 @@
   --background-color-dim: #0a0a0a80;
 }
 
+html {
+  font-size: min(1.5vw, 22px);
+}
+
 body {
   font-family: "Bricolage Grotesque", sans-serif;
-  font-size: min(1.5vw, 22px);
   background-color: var(--background-color);
   color: var(--on-background-color);
 }
@@ -32,8 +35,8 @@ body {
   display: flex;
   flex-direction: column;
   margin-top: auto;
-  padding: 2em;
-  gap: 2em;
+  padding: 2rem;
+  gap: 2rem;
 }
 
 body > main > article.primary {
@@ -47,7 +50,7 @@ body > main > article.secondary {
 }
 
 body > main > article {
-  padding: 3em;
+  padding: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,13 +62,13 @@ body > main > article > main {
   display: grid;
   grid-template-columns: 1fr min-content;
   grid-template-rows: min-content min-content;
-  row-gap: 2em;
+  row-gap: 2rem;
 }
 
 body > main > article > main > .content {
   display: flex;
   flex-direction: column;
-  gap: 2em;
+  gap: 2rem;
 }
 
 body > main > article > main > .action {
@@ -83,9 +86,14 @@ body > main > article > main > .action {
 .projects-list article {
   display: flex;
   flex-direction: column;
-  padding: 2em 0;
-  border-bottom: 2px solid var(--on-background-color-dim);
+  padding: 2rem 0;
+  border-bottom: 0.1rem solid var(--on-background-color-dim);
   color: var(--on-background-color);
+  transition: border-bottom 0.3s;
+}
+
+.projects-list article:hover {
+  border-bottom: 0.1rem solid var(--on-background-color);
 }
 
 .projects-list article > h3 {
@@ -95,50 +103,65 @@ body > main > article > main > .action {
 /* Texts */
 
 h1 {
-  font-size: 8em;
+  font-size: 8rem;
   font-weight: 300;
   color: var(--primary-color);
   line-height: 0.9;
 }
 
 p {
-  font-size: 1.4em;
+  font-size: 1.4rem;
   font-weight: 200;
   line-height: 1.2;
 }
 
 label {
-  font-size: 1.4em;
+  font-size: 1.4rem;
   font-weight: 300;
   line-height: 1.2;
 }
 
 h2 {
-  font-size: 4em;
+  font-size: 4rem;
   font-weight: 300;
   line-height: 1;
 }
 
 h3 {
-  font-size: 2.8em;
+  font-size: 2.8rem;
   font-weight: 300;
   line-height: 1.2;
 }
 
 .title-description {
-  font-size: 2.8em;
+  font-size: 2.8rem;
   font-weight: 200;
 }
 
 .highlight {
   text-decoration: underline;
+  text-decoration-thickness: 0.3rem;
+  text-underline-offset: 0.3rem;
 }
 
 .text-dim {
-  font-size: 1.4em;
+  font-size: 1.4rem;
   font-weight: 200;
   line-height: 1.2;
   color: var(--on-background-color-dim);
+  transition: color 0.3s;
+}
+
+a.text-dim:hover {
+  color: var(--on-background-color);
+}
+
+.text-dim.on-primary {
+  color: var(--background-color-dim);
+}
+
+a.text-dim.on-primary:hover {
+  color: var(--background-color);
 }
 
 a {
@@ -150,30 +173,30 @@ a {
 form {
   display: flex;
   flex-direction: column;
-  gap: 2em;
+  gap: 2rem;
 }
 
 form > div {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 0.5rem;
 }
 
 form input {
   font-family: "Bricolage Grotesque", sans-serif;
-  font-size: 1.4em;
+  font-size: 1.4rem;
   font-weight: 300;
   line-height: 1.2;
-  padding: 0.5em 0;
+  padding: 0.5rem 0;
   border: none;
-  border-bottom: 2px solid var(--on-background-color-dim);
+  border-bottom: 0.1rem solid var(--on-background-color-dim);
   background-color: transparent;
   outline: none;
   transition: border-bottom 0.3s;
 }
 
 form input:focus {
-  border-bottom: 2px solid var(--on-background-color);
+  border-bottom: 0.1rem solid var(--on-background-color);
 }
 
 form input::placeholder {
@@ -181,11 +204,11 @@ form input::placeholder {
 }
 
 form.on-primary input {
-  border-bottom: 2px solid var(--background-color-dim);
+  border-bottom: 0.1rem solid var(--background-color-dim);
 }
 
 form.on-primary input:focus {
-  border-bottom: 2px solid var(--background-color);
+  border-bottom: 0.1rem solid var(--background-color);
 }
 
 form.on-primary input::placeholder {
@@ -194,12 +217,12 @@ form.on-primary input::placeholder {
 
 form textarea {
   font-family: "Bricolage Grotesque", sans-serif;
-  font-size: 1.4em;
+  font-size: 1.4rem;
   font-weight: 300;
   line-height: 1.2;
-  padding: 0.5em 0;
+  padding: 0.5rem 0;
   border: none;
-  border-bottom: 2px solid var(--on-background-color-dim);
+  border-bottom: 0.1rem solid var(--on-background-color-dim);
   background-color: transparent;
   outline: none;
   display: block;
@@ -210,7 +233,7 @@ form textarea {
 }
 
 form textarea:focus {
-  border-bottom: 2px solid var(--on-background-color);
+  border-bottom: 0.1rem solid var(--on-background-color);
 }
 
 form textarea::placeholder {
@@ -218,11 +241,11 @@ form textarea::placeholder {
 }
 
 form.on-primary textarea {
-  border-bottom: 2px solid var(--background-color-dim);
+  border-bottom: 0.1rem solid var(--background-color-dim);
 }
 
 form.on-primary textarea:focus {
-  border-bottom: 2px solid var(--background-color);
+  border-bottom: 0.1rem solid var(--background-color);
 }
 
 form.on-primary textarea::placeholder {
@@ -245,13 +268,13 @@ button {
 
 .button.big {
   border-radius: 100%;
-  width: 7.2em;
-  height: 7.2em;
-  padding: 1em;
+  width: 9rem;
+  height: 9rem;
+  padding: 1rem;
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-size: 1.4em;
+  font-size: 1.4rem;
   font-weight: 300;
   line-height: 1.2;
   transition: transform 0.3s;

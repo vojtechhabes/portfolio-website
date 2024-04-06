@@ -18,6 +18,33 @@ body {
 
 /* Layout */
 
+.skills {
+  margin-top: 2rem;
+}
+
+.skills > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(3.5rem, 1fr));
+  gap: 4rem;
+}
+
+.skills article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.skills article > h3 {
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+
+.skills article > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .navigation-header {
   position: fixed;
   top: 1.5rem;

@@ -31,6 +31,8 @@ body {
   background-color: var(--background-color);
   border-radius: 100px;
   border: 0.1rem solid var(--on-background-color);
+  max-width: 1800px;
+  margin: 0 auto;
 }
 
 .navigation-header nav > ul {
@@ -138,6 +140,23 @@ body > main > article > main > .action {
 
 .projects-list article > h3 {
   color: var(--primary-color);
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: var(--background-color-dim);
+  color: var(--on-background-color-dim);
+}
+
+footer > main {
+  max-width: 1300px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
 /* Texts */

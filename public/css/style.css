@@ -18,6 +18,45 @@ body {
 
 /* Layout */
 
+.navigation-header {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  z-index: 1000;
+  background-color: var(--background-color);
+  border-radius: 100px;
+  border: 0.1rem solid var(--on-background-color);
+}
+
+.navigation-header nav > ul {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navigation-header nav > ul > li > a {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--on-background-color);
+  transition: color 0.3s;
+}
+
+.navigation-header nav > ul > li > a:hover {
+  color: var(--primary-color);
+}
+
+.navigation-header nav > ul > li.active > a {
+  color: var(--primary-color);
+}
+
+.navigation-header nav > ul > li.active > a:hover {
+  color: var(--on-background-color);
+}
+
 .title-section {
   display: grid;
   grid-template-columns: 40% 60%;

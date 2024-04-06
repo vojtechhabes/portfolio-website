@@ -4,9 +4,16 @@
     <%-include("./partials/head", { title: "Vojtěch Habeš" })%>
   </head>
   <body>
-    <%-include("./partials/titleSection", { title: "Vojtěch<br />Habeš",
-    description: "Webový vývojář<br />UI/UX designér", image: "/images/me.jpg"
-    })%>
+    <%-include("./partials/header", { currentPage: "/" })%>
+
+    <header class="title-section">
+      <img src="/images/me.jpg" alt="Vojtěch Habeš" />
+      <section class="text">
+        <h1>Vojtěch<br />Habeš</h1>
+        <p class="title-description">Webový vývojář<br />UI/UX designér</p>
+      </section>
+    </header>
+
     <main>
       <article class="primary">
         <main>

@@ -89,11 +89,12 @@ body > main > article > main > .action {
   padding: 2rem 0;
   border-bottom: 0.1rem solid var(--on-background-color-dim);
   color: var(--on-background-color);
-  transition: border-bottom 0.3s;
+  transition: border-bottom 0.3s, padding-left 0.3s;
 }
 
 .projects-list article:hover {
   border-bottom: 0.1rem solid var(--on-background-color);
+  padding-left: 1rem;
 }
 
 .projects-list article > h3 {
@@ -192,11 +193,12 @@ form input {
   border-bottom: 0.1rem solid var(--on-background-color-dim);
   background-color: transparent;
   outline: none;
-  transition: border-bottom 0.3s;
+  transition: border-bottom 0.3s, padding-left 0.3s;
 }
 
 form input:focus {
   border-bottom: 0.1rem solid var(--on-background-color);
+  padding-left: 1rem;
 }
 
 form input::placeholder {
@@ -229,11 +231,13 @@ form textarea {
   width: 100%;
   resize: none;
   overflow: hidden;
-  transition: border-bottom 0.3s;
+  transition: border-bottom 0.3s, padding-left 0.3s, width 0.3s;
 }
 
 form textarea:focus {
   border-bottom: 0.1rem solid var(--on-background-color);
+  padding-left: 1rem;
+  width: calc(100% - 1rem);
 }
 
 form textarea::placeholder {

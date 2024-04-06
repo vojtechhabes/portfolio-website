@@ -195,59 +195,43 @@ footer > main {
   gap: 2rem;
 }
 
-/* Timeline */
+/* List */
 
-.timeline {
-  display: grid;
-  grid-template-columns: 0.1rem 1fr;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.timeline > .line {
-  grid-column: 1;
-  grid-row: 1;
-  height: 100%;
-  background-color: var(--on-background-color-dim);
-}
-
-.timeline > .events {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.timeline > .events > ul {
+.list > ul {
   display: flex;
   flex-direction: column;
+}
+
+.list.columns article {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
   gap: 2rem;
 }
 
-.timeline > .events article {
+.list.columns article > div {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  position: relative;
 }
 
-.timeline > .events article > h3 {
-  font-size: 1.4rem;
-  font-weight: 300;
+.list article {
+  gap: 0.5rem;
+  padding: 2rem 0;
+  border-bottom: 0.1rem solid var(--on-background-color-dim);
+}
+
+article.primary .list article {
+  border-bottom: 0.1rem solid var(--background-color-dim);
+}
+
+article.secondary .list article h3 {
   color: var(--primary-color);
 }
 
-.timeline > .events article > p {
-  font-size: 1.4rem;
-  font-weight: 200;
-}
-
-.timeline > .events article > .circle {
-  width: 0.8rem;
-  height: 0.8rem;
-  border-radius: 100%;
-  background-color: var(--primary-color);
-  position: absolute;
-  top: 0;
-  left: -1.5rem;
+.list:not(.columns) article {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 /* Texts */
@@ -306,11 +290,11 @@ a.text-dim:hover {
   color: var(--on-background-color);
 }
 
-.text-dim.on-primary {
+article.primary .text-dim {
   color: var(--background-color-dim);
 }
 
-a.text-dim.on-primary:hover {
+article.primary a.text-dim:hover {
   color: var(--background-color);
 }
 
@@ -354,15 +338,15 @@ form input::placeholder {
   color: var(--on-background-color-dim);
 }
 
-form.on-primary input {
+article.primary form input {
   border-bottom: 0.1rem solid var(--background-color-dim);
 }
 
-form.on-primary input:focus {
+article.primary form input:focus {
   border-bottom: 0.1rem solid var(--background-color);
 }
 
-form.on-primary input::placeholder {
+article.primary form input::placeholder {
   color: var(--background-color-dim);
 }
 
@@ -393,15 +377,15 @@ form textarea::placeholder {
   color: var(--on-background-color-dim);
 }
 
-form.on-primary textarea {
+article.primary form textarea {
   border-bottom: 0.1rem solid var(--background-color-dim);
 }
 
-form.on-primary textarea:focus {
+article.primary form textarea:focus {
   border-bottom: 0.1rem solid var(--background-color);
 }
 
-form.on-primary textarea::placeholder {
+article.primary form textarea::placeholder {
   color: var(--background-color-dim);
 }
 

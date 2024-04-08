@@ -163,31 +163,6 @@ body > main > article > main > .action {
   grid-row: 2;
 }
 
-/* Projects */
-
-.projects-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.projects-list article {
-  display: flex;
-  flex-direction: column;
-  padding: 2rem 0;
-  border-bottom: 0.1rem solid var(--on-background-color-dim);
-  color: var(--on-background-color);
-  transition: border-bottom 0.3s, padding-left 0.3s;
-}
-
-.projects-list article:hover {
-  border-bottom: 0.1rem solid var(--on-background-color);
-  padding-left: 1rem;
-}
-
-.projects-list article > h3 {
-  color: var(--primary-color);
-}
-
 /* Footer */
 
 footer {
@@ -209,7 +184,12 @@ footer > main {
 
 /* List */
 
-.list > ul {
+.list a > article:hover {
+  border-bottom: 0.1rem solid var(--on-background-color);
+  padding-left: 1rem;
+}
+
+.list {
   display: flex;
   flex-direction: column;
 }
@@ -230,10 +210,13 @@ footer > main {
   gap: 0.5rem;
   padding: 2rem 0;
   border-bottom: 0.1rem solid var(--on-background-color-dim);
+  color: var(--on-background-color);
+  transition: border-bottom 0.3s, padding-left 0.3s;
 }
 
 article.primary .list article {
   border-bottom: 0.1rem solid var(--background-color-dim);
+  color: var(--background-color);
 }
 
 article.secondary .list article h3 {

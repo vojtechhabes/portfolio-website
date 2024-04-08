@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <%-include("./partials/head", { title: "Vojtěch Habeš" })%>
+  </head>
+  <body>
+    <%-include("./partials/header", { currentPage: "/projects" })%>
+
+    <header class="title-section">
+      <img src="/images/me2.jpg" alt="Vojtěch Habeš" />
+      <section class="text">
+        <h1>Mé projekty</h1>
+        <p class="title-description">Můj kreativní svět.</p>
+      </section>
+    </header>
+
+    <main>
+      <article class="primary">
+        <main>
+          <section class="content">
+            <h2>Baví mě <span class="highlight">vytvářet</span> nové věci.</h2>
+            <p>
+              S nadšením tvořím nástroje, které usnadňují lidem život. Nejraději
+              vytvářím webové stránky a webové aplikace, ale velice rád se
+              zapojím i do jiných projektů.
+            </p>
+          </section>
+          <section class="action">
+            <a href="/about" class="button big secondary">Více o mně</a>
+          </section>
+        </main>
+      </article>
+
+      <article class="secondary">
+        <main>
+          <section class="content">
+            <h2>Mé <span class="highlight">všechny</span> projekty.</h2>
+            <p>
+              I přes to, že jsem teprve na začátku své kariéry, mám již za sebou
+              několik i větších projektů, na kterých jsem pracoval.
+            </p>
+            <ul class="list">
+              <li>
+                <a href="/projects/projekt1">
+                  <article>
+                    <h3>Projekt 1</h3>
+                    <p>Popis projektu 1</p>
+                  </article>
+                </a>
+              </li>
+              <li>
+                <a href="/projects/projekt2">
+                  <article>
+                    <h3>Projekt 2</h3>
+                    <p>Popis projektu 2</p>
+                  </article>
+                </a>
+              </li>
+              <li>
+                <a href="/projects/projekt3">
+                  <article>
+                    <h3>Projekt 3</h3>
+                    <p>Popis projektu 3</p>
+                  </article>
+                </a>
+              </li>
+              <li>
+                <a href="/projects/projekt4">
+                  <article>
+                    <h3>Projekt 4</h3>
+                    <p>Popis projektu 4</p>
+                  </article>
+                </a>
+              </li>
+            </ul>
+          </section>
+        </main>
+      </article>
+
+      <article class="primary">
+        <main>
+          <section class="content">
+            <h2>
+              Máte <span class="highlight">nápad</span>? Díky mně se může stát
+              <span class="highlight">skutečností</span>.
+            </h2>
+            <p>
+              Pokud máte nápad na projekt, který byste chtěli realizovat,
+              neváhejte mě kontaktovat. Rád se zapojím do vašeho projektu a
+              pomohu vám ho realizovat.
+            </p>
+          </section>
+          <section class="action">
+            <a href="/contact" class="button big secondary">Spojme se</a>
+          </section>
+        </main>
+      </article>
+    </main>
+
+    <%-include("./partials/footer")%>
+  </body>
+</html>

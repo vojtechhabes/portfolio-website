@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <%-include("./partials/head", { title: "Projekt - Vojtěch Habeš" })%>
+  </head>
+  <body>
+    <%-include("./partials/header", { currentPage: "/projects" })%>
+
+    <header class="title-section">
+      <section class="image">
+        <img src="/images/wavetag.webp" alt="WaveTag" />
+      </section>
+      <section class="text">
+        <h1>Ukázkový projekt</h1>
+        <p class="title-description">Slouží jako ukázka.</p>
+      </section>
+    </header>
+
+    <main>
+      <article class="normal primary">
+        <main>
+          <section class="content">
+            <ul class="horizontal-list">
+              <li>
+                <p>vytvořil Vojtěch Habeš</p>
+              </li>
+              <li>
+                <p>publikováno 26.9.2023</p>
+              </li>
+            </ul>
+          </section>
+        </main>
+      </article>
+      <article class="post">
+        <main>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet
+            non curabitur gravida arcu ac. Mauris a diam maecenas sed enim ut
+            sem viverra.
+          </p>
+
+          <h2>Popis</h2>
+          <p>
+            Tento projekt slouží jako ukázka mé práce. Je vytvořený pomocí
+            technologií HTML, CSS a JavaScript. Je responzivní a přizpůsobí se
+            jakémukoliv zařízení.
+          </p>
+
+          <h2>Použité technologie</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet
+            non curabitur gravida arcu ac. Mauris a diam maecenas sed enim ut
+            sem viverra. Senectus et netus et malesuada fames ac turpis.
+            Praesent tristique magna sit amet purus gravida quis. Mauris sit
+            amet massa vitae tortor condimentum lacinia quis vel. Dignissim
+            suspendisse in est ante in nibh. Tempor commodo ullamcorper a lacus
+            vestibulum sed arcu. Bibendum arcu vitae elementum curabitur vitae
+            nunc sed velit. Nunc sed blandit libero volutpat sed cras ornare
+            arcu. Sit amet mattis vulputate enim nulla aliquet porttitor.
+          </p>
+        </main>
+      </article>
+
+      <article class="normal primary">
+        <main>
+          <section class="content">
+            <h2>
+              Podívejte se i na <span class="highlight">ostatní</span> projekty.
+            </h2>
+            <p>
+              Toto je jen jeden z mých projektů. Pokud vás zajímají i ostatní,
+              podívejte se na ně na stránce se všemi projekty.
+            </p>
+          </section>
+          <section class="action">
+            <a href="/projects" class="button big secondary"
+              >Všechny projekty</a
+            >
+          </section>
+        </main>
+      </article>
+    </main>
+
+    <%-include("./partials/footer")%>
+  </body>
+</html>

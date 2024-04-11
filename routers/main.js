@@ -13,4 +13,8 @@ router.get("/projects", (req, res) => {
   res.render("projects");
 });
 
+router.get("/projects/:id", (req, res) => {
+  res.render("project");
+});
+
 module.exports = router;

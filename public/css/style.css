@@ -93,6 +93,35 @@ article.secondary .skills article > img {
   color: var(--on-background-color);
 }
 
+/* Posts */
+
+body > main > article.post {
+  background-color: var(--background-color);
+  color: var(--on-background-color);
+}
+
+body > main > article.post > main {
+  display: flex;
+  flex-direction: column;
+  max-width: 1300px;
+  width: 100%;
+  gap: 1rem;
+}
+
+body > main > article.post > main h2 {
+  margin-top: 2rem;
+}
+
+body > main > article.post > main h3 {
+  margin-top: 1rem;
+}
+
+body > main > article.post > main p:first-child {
+  /* perex */
+  font-size: 1.6rem;
+  font-weight: 300;
+}
+
 /* Layout */
 
 .title-section {
@@ -126,7 +155,7 @@ body > main > article.primary {
   color: var(--background-color);
 }
 
-body > main > article > main > .content > img {
+body > main > article.normal > main > .content > img {
   width: 100%;
   height: 100%;
   max-height: 500px;
@@ -146,22 +175,21 @@ body > main > article {
   align-items: center;
 }
 
-body > main > article > main {
+body > main > article.normal > main {
   max-width: 1300px;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr min-content;
   grid-template-rows: min-content min-content;
-  row-gap: 2rem;
 }
 
-body > main > article > main > .content {
+body > main > article.normal > main > .content {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 
-body > main > article > main > .action {
+body > main > article.normal > main > .action {
   display: flex;
   align-items: flex-end;
   grid-column: 2;
@@ -189,9 +217,40 @@ footer > main {
 
 /* List */
 
+.horizontal-list {
+  display: flex;
+}
+
+.horizontal-list > li {
+  padding: 0.25rem 1rem;
+}
+
+.primary .horizontal-list > li {
+  border-right: 0.1rem solid var(--background-color-dim);
+  color: var(--background-color);
+}
+
+.secondary .horizontal-list > li {
+  border-right: 0.1rem solid var(--on-background-color-dim);
+  color: var(--on-background-color);
+}
+
+.horizontal-list > li:first-child {
+  padding-left: 0;
+}
+
+.horizontal-list > li:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
 .list a > article:hover {
   border-bottom: 0.1rem solid var(--on-background-color);
   padding-left: 1rem;
+}
+
+.list a > article:active {
+  padding-left: 0;
 }
 
 .list {
@@ -439,6 +498,10 @@ button {
 
 .button.big:hover {
   transform: scale(1.1);
+}
+
+.button.big:active {
+  transform: scale(1);
 }
 
 .button.primary {

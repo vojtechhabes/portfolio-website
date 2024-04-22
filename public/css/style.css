@@ -7,7 +7,7 @@
 }
 
 html {
-  font-size: min(1.9vw, 22px);
+  font-size: min(1.8vw, 22px);
 }
 
 body {
@@ -51,6 +51,10 @@ article.secondary .skills article > img {
 }
 
 /* Navigation */
+
+.menu-button {
+  display: none;
+}
 
 .navigation-header {
   position: fixed;
@@ -190,8 +194,6 @@ body > main > article.normal > main > .content {
 }
 
 body > main > article.normal > main > .action {
-  display: flex;
-  align-items: flex-end;
   grid-column: 2;
   grid-row: 2;
 }
@@ -405,6 +407,7 @@ form input {
   border-bottom: 0.1rem solid var(--on-background-color-dim);
   background-color: transparent;
   outline: none;
+  border-radius: 0;
   transition: border-bottom 0.3s, padding-left 0.3s;
 }
 
@@ -442,6 +445,7 @@ form textarea {
   display: block;
   width: 100%;
   resize: none;
+  border-radius: 0;
   overflow: hidden;
   transition: border-bottom 0.3s, padding-left 0.3s, width 0.3s;
 }
@@ -512,4 +516,86 @@ button {
 .button.secondary {
   background-color: var(--background-color);
   color: var(--primary-color);
+}
+
+@media (max-width: 820px) {
+  html {
+    font-size: 14px;
+  }
+
+  /* Layout */
+
+  .title-section {
+    grid-template-columns: 1fr;
+    grid-template-rows: 60vw 1fr;
+    min-height: auto;
+  }
+
+  .title-section > .image > img {
+    object-position: 50% 25%;
+  }
+
+  .title-section > .text {
+    padding: 3rem 2rem;
+  }
+
+  /* Texts */
+
+  h1 {
+    font-size: 6rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+
+  h3 {
+    font-size: 2.4rem;
+  }
+
+  .title-description {
+    font-size: 2.4rem;
+  }
+
+  p {
+    font-size: 1.6rem;
+  }
+
+  /* Navigation */
+
+  .navigation-header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 0.1rem solid var(--on-background-color);
+  }
+}
+
+@media (max-width: 720px) {
+  /* Layout */
+
+  body > main > article.normal > main {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  body > main > article.normal > main > .action {
+    display: flex;
+    justify-content: flex-end;
+    grid-column: 1;
+  }
+
+  body > main > article {
+    padding: 2rem;
+  }
+
+  /* List */
+
+  .list.columns article {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }

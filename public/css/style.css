@@ -520,7 +520,7 @@ button {
 
 @media (max-width: 820px) {
   html {
-    font-size: 14px;
+    font-size: min(3.2vw, 16px);
   }
 
   /* Layout */
@@ -567,6 +567,7 @@ button {
     left: 0;
     right: 0;
     top: 0;
+    bottom: 0;
     padding: 2rem;
     padding-top: 6rem;
     border-radius: 0;
@@ -600,7 +601,6 @@ button {
   }
 
   .menu-button {
-    display: block;
     position: fixed;
     top: 1.5rem;
     right: 1.5rem;
@@ -647,6 +647,10 @@ button {
 
   body > main > article.normal > main {
     grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  body > main > article.normal > main:has(.action) {
     gap: 3rem;
   }
 
@@ -665,6 +669,28 @@ button {
   .list.columns article {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+
+  .horizontal-list {
+    flex-direction: column;
+  }
+
+  .horizontal-list > li {
+    padding: 1rem 0;
+  }
+
+  .primary .horizontal-list > li {
+    border-right: none;
+    border-bottom: 0.1rem solid var(--background-color-dim);
+  }
+
+  .secondary .horizontal-list > li {
+    border-right: none;
+    border-bottom: 0.1rem solid var(--on-background-color-dim);
+  }
+
+  .horizontal-list > li:last-child {
+    border-bottom: none;
   }
 }
 

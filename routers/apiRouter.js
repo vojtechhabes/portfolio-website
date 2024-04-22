@@ -245,6 +245,7 @@ router.get("/project", authMiddleware, async (req, res) => {
         _id: project._id,
         title: project.title,
         content: project.content,
+        description: project.description,
         published: project.published,
         userId: project.userId,
         createdAt: project.createdAt,
@@ -261,7 +262,7 @@ router.get("/project", authMiddleware, async (req, res) => {
 
 router.patch("/project/:id", authMiddleware, async (req, res) => {
   const { id } = req.params;
-  const { title, content, published } = req.body;
+  const { title, content, published, description } = req.body;
 
   try {
     const project = await Project.findOne({ _id: id });
@@ -302,6 +303,16 @@ router.patch("/project/:id", authMiddleware, async (req, res) => {
       project.published = published;
     }
 
+    if (description) {
+      if (typeof description !== "string") {
+        return res.status(400).json({
+          code: "invalid-description",
+          message: "The description field must be a string.",
+        });
+      }
+      project.description = description;
+    }
+
     await project.save();
 
     return res.status(200).json({
@@ -311,6 +322,7 @@ router.patch("/project/:id", authMiddleware, async (req, res) => {
         _id: project._id,
         title: project.title,
         content: project.content,
+        description: project.description,
         published: project.published,
         userId: project.userId,
         createdAt: project.createdAt,
@@ -322,13 +334,12 @@ router.patch("/project/:id", authMiddleware, async (req, res) => {
         code: "invalid-id",
         message: "The provided ID is not a valid project ID.",
       });
-    } else {
-      console.error(error);
-      return res.status(500).json({
-        code: "server-error",
-        message: "An error occurred while processing the request.",
-      });
     }
+    console.error(error);
+    return res.status(500).json({
+      code: "server-error",
+      message: "An error occurred while processing the request.",
+    });
   }
 });
 

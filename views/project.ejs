@@ -11,8 +11,8 @@
         <img src="/images/wavetag.webp" alt="WaveTag" />
       </section>
       <section class="text">
-        <h1>Ukázka</h1>
-        <p class="title-description">Slouží jako ukázkový projekt.</p>
+        <h1><%=project.title%></h1>
+        <p class="title-description"><%=project.description%></p>
       </section>
     </header>
 
@@ -25,7 +25,10 @@
                 <p>vytvořil Vojtěch Habeš</p>
               </li>
               <li>
-                <p>publikováno 26.9.2023</p>
+                <p>
+                  publikováno <%= new
+                  Date(project.createdAt).toISOString().split("T")[0] %>
+                </p>
               </li>
             </ul>
           </section>

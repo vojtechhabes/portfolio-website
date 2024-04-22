@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const RefreshToken = require("../models/refreshToken");
+const Project = require("../models/project");
 const {
   generateAccessToken,
   generateRefreshToken,
@@ -157,8 +158,96 @@ router.patch(
   }
 );
 
-router.post("/projects/:id", async (req, res) => {
-  // add project to database
+router.post("/project", authMiddleware, async (req, res) => {
+  const { title } = req.body;
+
+  if (!title) {
+    return res.status(400).json({
+      code: "missing-title",
+      message: "A title is required.",
+    });
+  }
+
+  try {
+    const newProject = new Project({
+      title,
+      userId: req.user._id,
+    });
+
+    await newProject.save();
+
+    return res.status(201).json({
+      code: "project-created",
+      message: "The project has been successfully created.",
+      project: {
+        _id: newProject._id,
+        title: newProject.title,
+        published: newProject.published,
+        userId: newProject.userId,
+        createdAt: newProject.createdAt,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      code: "server-error",
+      message: "An error occurred while processing the request.",
+    });
+  }
+});
+
+router.delete(
+  "/project/:id",
+  authMiddleware,
+  passwordMiddleware,
+  async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const project = await Project.findOne({ _id: id });
+      if (!project) {
+        return res.status(404).json({
+          code: "project-not-found",
+          message: "The project with the provided ID was not found.",
+        });
+      }
+
+      if (project.userId.toString() !== req.user._id.toString()) {
+        return res.status(403).json({
+          code: "forbidden",
+          message: "You are not allowed to delete this project.",
+        });
+      }
+
+      await Project.deleteOne({ _id: id });
+
+      return res.status(200).json({
+        code: "project-deleted",
+        message: "The project has been successfully deleted.",
+      });
+    } catch (error) {
+      if (error.name === "CastError") {
+        return res.status(400).json({
+          code: "invalid-id",
+          message: "The provided ID is not a valid project ID.",
+        });
+      } else {
+        console.error(error);
+        return res.status(500).json({
+          code: "server-error",
+          message: "An error occurred while processing the request.",
+        });
+      }
+    }
+  }
+);
+
+router.get("/project", authMiddleware, async (req, res) => {
+  // get project list from database
+});
+
+router.get("/project/:id", authMiddleware, async (req, res) => {
+  // get project details from database
 });
 
 module.exports = router;

@@ -14,10 +14,21 @@
         <a href="/contact">Spojme se</a>
       </li>
     </ul>
-    <button class="menu-button">
-      <div></div>
-      <div></div>
-      <div></div>
-    </button>
   </nav>
 </header>
+
+<button class="menu-button">
+  <div></div>
+  <div></div>
+  <div></div>
+</button>
+
+<script>
+  const menuButton = document.querySelector(".menu-button");
+  const navHeader = document.querySelector(".navigation-header");
+
+  menuButton.addEventListener("click", () => {
+    navHeader.classList.toggle("open");
+    menuButton.classList.toggle("open");
+  });
+</script>

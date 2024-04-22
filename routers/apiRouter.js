@@ -212,13 +212,6 @@ router.delete(
         });
       }
 
-      if (project.userId.toString() !== req.user._id.toString()) {
-        return res.status(403).json({
-          code: "forbidden",
-          message: "You are not allowed to delete this project.",
-        });
-      }
-
       await Project.deleteOne({ _id: id });
 
       return res.status(200).json({
@@ -243,11 +236,100 @@ router.delete(
 );
 
 router.get("/project", authMiddleware, async (req, res) => {
-  // get project list from database
+  try {
+    const projects = await Project.find({ userId: req.user._id });
+
+    return res.status(200).json({
+      code: "projects-found",
+      projects: projects.map((project) => ({
+        _id: project._id,
+        title: project.title,
+        content: project.content,
+        published: project.published,
+        userId: project.userId,
+        createdAt: project.createdAt,
+      })),
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      code: "server-error",
+      message: "An error occurred while processing the request.",
+    });
+  }
 });
 
-router.get("/project/:id", authMiddleware, async (req, res) => {
-  // get project details from database
+router.patch("/project/:id", authMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const { title, content, published } = req.body;
+
+  try {
+    const project = await Project.findOne({ _id: id });
+    if (!project) {
+      return res.status(404).json({
+        code: "project-not-found",
+        message: "The project with the provided ID was not found.",
+      });
+    }
+
+    if (title) {
+      if (typeof title !== "string") {
+        return res.status(400).json({
+          code: "invalid-title",
+          message: "The title field must be a string.",
+        });
+      }
+      project.title = title;
+    }
+
+    if (content !== undefined) {
+      if (typeof content !== "string") {
+        return res.status(400).json({
+          code: "invalid-content",
+          message: "The content field must be a string.",
+        });
+      }
+      project.content = content;
+    }
+
+    if (published !== undefined) {
+      if (typeof published !== "boolean") {
+        return res.status(400).json({
+          code: "invalid-published",
+          message: "The published field must be a boolean.",
+        });
+      }
+      project.published = published;
+    }
+
+    await project.save();
+
+    return res.status(200).json({
+      code: "project-updated",
+      message: "The project has been successfully updated.",
+      project: {
+        _id: project._id,
+        title: project.title,
+        content: project.content,
+        published: project.published,
+        userId: project.userId,
+        createdAt: project.createdAt,
+      },
+    });
+  } catch (error) {
+    if (error.name === "CastError") {
+      return res.status(400).json({
+        code: "invalid-id",
+        message: "The provided ID is not a valid project ID.",
+      });
+    } else {
+      console.error(error);
+      return res.status(500).json({
+        code: "server-error",
+        message: "An error occurred while processing the request.",
+      });
+    }
+  }
 });
 
 module.exports = router;

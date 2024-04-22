@@ -9,6 +9,10 @@ const {
   refreshBothTokens,
   validateRefreshToken,
 } = require("../utils/tokenManagement");
+const {
+  authMiddleware,
+  passwordMiddleware,
+} = require("../middlewares/authMiddleware");
 
 router.post("/auth/login", async (req, res) => {
   const { username, password } = req.body;
@@ -51,6 +55,11 @@ router.post("/auth/login", async (req, res) => {
     return res.status(200).json({
       accessToken,
       refreshToken,
+      user: {
+        _id: user._id,
+        username: user.username,
+        createdAt: user.createdAt,
+      },
     });
   } catch (error) {
     console.error(error);
@@ -113,9 +122,40 @@ router.post("/auth/logout", async (req, res) => {
   }
 });
 
-router.patch("/auth/password", async (req, res) => {
-  // change user password
-});
+router.patch(
+  "/auth/password",
+  authMiddleware,
+  passwordMiddleware,
+  async (req, res) => {
+    const { newPassword } = req.body;
+    if (!newPassword) {
+      return res.status(400).json({
+        code: "missing-password",
+        message: "A new password is required.",
+      });
+    }
+
+    try {
+      const salt = await bcrypt.genSalt();
+      const passwordHash = await bcrypt.hash(newPassword, salt);
+
+      await User.updateOne({ _id: req.user._id }, { passwordHash });
+      await RefreshToken.deleteMany({ userId: req.user._id });
+
+      return res.status(200).json({
+        code: "password-updated",
+        message:
+          "The user's password has been successfully updated. You will need to log in again.",
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        code: "server-error",
+        message: "An error occurred while processing the request.",
+      });
+    }
+  }
+);
 
 router.post("/projects/:id", async (req, res) => {
   // add project to database

@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 require("dotenv").config();
 
 const app = express();
@@ -24,8 +25,16 @@ const apiRouter = require("./routers/apiRouter");
 app.use("/api", apiRouter);
 
 const startServer = async () => {
-  await app.listen(process.env.PORT);
-  console.log(`Server is running on port ${process.env.PORT}.`);
+  try {
+    await mongoose.connect(process.env.DB_URI);
+    const db = mongoose.connection;
+    console.log(`Connected to database ${db.db.databaseName}.`);
+
+    await app.listen(process.env.PORT);
+    console.log(`Server is running on port ${process.env.PORT}.`);
+  } catch (error) {
+    console.error(`Error while starting server: ${error.message}`);
+  }
 };
 
 startServer();

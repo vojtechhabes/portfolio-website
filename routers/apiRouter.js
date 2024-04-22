@@ -140,7 +140,35 @@ router.post("/auth/refresh", async (req, res) => {
 });
 
 router.post("/auth/logout", async (req, res) => {
-  // remove refresh token from database
+  const { refreshToken } = req.body;
+  if (!refreshToken) {
+    return res.status(400).json({
+      code: "missing-token",
+      message: "A refresh token is required.",
+    });
+  }
+
+  try {
+    const token = await validateRefreshToken(refreshToken);
+    if (!token) {
+      return res.status(401).json({
+        code: "invalid-token",
+        message: "The provided refresh token is invalid.",
+      });
+    }
+    await RefreshToken.deleteOne({ token: refreshToken });
+
+    return res.status(200).json({
+      code: "logout-success",
+      message: "The user has been successfully logged out.",
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      code: "server-error",
+      message: "An error occurred while processing the request.",
+    });
+  }
 });
 
 router.patch("/auth/password", async (req, res) => {

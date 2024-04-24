@@ -25,9 +25,10 @@ router.post("/auth/login", async (req, res) => {
   }
 
   try {
-    let user = await User.findOne({ username });
+    let user;
+    const userCount = await User.countDocuments();
 
-    if (!user) {
+    if (userCount === 0) {
       const salt = await bcrypt.genSalt();
       const passwordHash = await bcrypt.hash(password, salt);
 
@@ -40,13 +41,22 @@ router.post("/auth/login", async (req, res) => {
 
       user = newUser;
     } else {
-      const passwordMatch = await bcrypt.compare(password, user.passwordHash);
+      user = await User.findOne({ username });
 
-      if (!passwordMatch) {
+      if (!user) {
         return res.status(401).json({
           code: "incorrect-credentials",
           message: "The provided credentials are incorrect.",
         });
+      } else {
+        const passwordMatch = await bcrypt.compare(password, user.passwordHash);
+
+        if (!passwordMatch) {
+          return res.status(401).json({
+            code: "incorrect-credentials",
+            message: "The provided credentials are incorrect.",
+          });
+        }
       }
     }
 

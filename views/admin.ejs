@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Vojtěch Habeš</title>
+  </head>
+  <body>
+    <form>
+      <label for="username">Přihlašovací jméno</label>
+      <input type="text" id="username" name="username" />
+      <label for="password">Heslo</label>
+      <input type="password" id="password" name="password" />
+      <button type="submit">Přihlásit se</button>
+    </form>
+
+    <script>
+      const form = document.querySelector("form");
+
+      const setCookie = (cname, cvalue, exseconds) => {
+        const d = new Date();
+        d.setTime(d.getTime() + exseconds * 1000);
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+      };
+
+      const getCookie = (cname) => {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == " ") {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      };
+
+      const checkLogin = async () => {
+        const accessToken = getCookie("accessToken");
+        const refreshToken = getCookie("refreshToken");
+
+        if (!accessToken || !refreshToken) {
+          return;
+        }
+
+        const response = await fetch("/api/auth/refresh", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ refreshToken }),
+        });
+
+        const data = await response.json();
+
+        console.log(data);
+
+        if (!response.ok) {
+          return;
+        }
+
+        setCookie("accessToken", data.accessToken, 10 * 60);
+        setCookie("refreshToken", data.refreshToken, 7 * 24 * 60 * 60);
+      };
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const username = document.querySelector("#username").value;
+        const password = document.querySelector("#password").value;
+
+        const response = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        });
+
+        const data = await response.json();
+        console.log(data);
+
+        if (!response.ok) {
+          alert("Invalid username or password");
+          return;
+        }
+
+        setCookie("refreshToken", data.refreshToken, 7 * 24 * 60 * 60);
+        setCookie("accessToken", data.accessToken, 10 * 60);
+      });
+
+      checkLogin();
+    </script>
+  </body>
+</html>

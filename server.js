@@ -1,4 +1,8 @@
-// https://expressjs.com/en/resources/middleware/cors.html
+/*
+Zdroje:
+- https://expressjs.com/en/resources/middleware/cors.html
+- https://www.w3schools.com/js/js_cookies.asp
+*/
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -37,13 +41,24 @@ const apiRouter = require("./routers/apiRouter");
 app.use("/api", apiRouter);
 
 const startServer = async () => {
+  let noDb = false;
   try {
     await mongoose.connect(process.env.DB_URI);
     const db = mongoose.connection;
     console.log(`Connected to database ${db.db.databaseName}.`);
+  } catch (error) {
+    noDb = true;
+    console.error(`Error while connecting to database: ${error.message}`);
+  }
 
-    await app.listen(process.env.PORT);
+  try {
+    await app.listen(process.env.PORT || 3000);
     console.log(`Server is running on port ${process.env.PORT}.`);
+    if (noDb) {
+      console.log(
+        "Warning: The server is running without a database connection."
+      );
+    }
   } catch (error) {
     console.error(`Error while starting server: ${error.message}`);
   }

@@ -41,40 +41,22 @@
               I přes to, že jsem teprve na začátku své kariéry, mám již za sebou
               několik i větších projektů, na kterých jsem pracoval.
             </p>
+            <% if (projects.length !== 0) { %>
             <ul class="list">
+              <% for (const project of projects) { %>
               <li>
-                <a href="/projects/projekt1">
+                <a href="/projects/<%=project._id%>">
                   <article>
-                    <h3>Projekt 1</h3>
-                    <p>Popis projektu 1</p>
+                    <h3><%=project.title%></h3>
+                    <p><%=project.description%></p>
                   </article>
                 </a>
               </li>
-              <li>
-                <a href="/projects/projekt2">
-                  <article>
-                    <h3>Projekt 2</h3>
-                    <p>Popis projektu 2</p>
-                  </article>
-                </a>
-              </li>
-              <li>
-                <a href="/projects/projekt3">
-                  <article>
-                    <h3>Projekt 3</h3>
-                    <p>Popis projektu 3</p>
-                  </article>
-                </a>
-              </li>
-              <li>
-                <a href="/projects/projekt4">
-                  <article>
-                    <h3>Projekt 4</h3>
-                    <p>Popis projektu 4</p>
-                  </article>
-                </a>
-              </li>
+              <% } %>
             </ul>
+            <% } else { %>
+            <p>Nebyly nalezeny žádné projekty.</p>
+            <% } %>
           </section>
         </main>
       </article>

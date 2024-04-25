@@ -1,3 +1,5 @@
+/* Global */
+
 :root {
   --primary-color: #b5d438;
   --background-color: #0a0a0a;
@@ -126,6 +128,27 @@ body > main > article.post > main p:first-child {
   font-weight: 300;
 }
 
+body > main > article.post a {
+  color: var(--primary-color);
+}
+
+body > main > article.post a:hover {
+  text-decoration: underline;
+}
+
+body > main > article.post ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+body > main > article.post ul > li {
+  list-style: circle;
+  gap: 1rem;
+  font-size: 1.6rem;
+  font-weight: 300;
+}
+
 /* Layout */
 
 .title-section {
@@ -151,6 +174,7 @@ body > main > article.post > main p:first-child {
   flex-direction: column;
   margin-top: auto;
   padding: 2rem;
+  padding-top: 7rem;
   gap: 2rem;
 }
 

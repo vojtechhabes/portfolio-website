@@ -9,7 +9,7 @@
 }
 
 html {
-  font-size: min(1.8vw, 22px);
+  font-size: min(1.8vw, 20px);
 }
 
 body {
@@ -106,7 +106,7 @@ body > main > article.post {
   color: var(--on-background-color);
 }
 
-body > main > article.post > main {
+body > main > article.post > div {
   display: flex;
   flex-direction: column;
   max-width: 1300px;
@@ -114,15 +114,15 @@ body > main > article.post > main {
   gap: 1rem;
 }
 
-body > main > article.post > main h2 {
+body > main > article.post > div h2 {
   margin-top: 2rem;
 }
 
-body > main > article.post > main h3 {
+body > main > article.post > div h3 {
   margin-top: 1rem;
 }
 
-body > main > article.post > main p:first-child {
+body > main > article.post > div p:first-child {
   /* perex */
   font-size: 1.6rem;
   font-weight: 300;
@@ -183,7 +183,7 @@ body > main > article.primary {
   color: var(--background-color);
 }
 
-body > main > article.normal > main > .content > img {
+body > main > article.normal > div > .content > img {
   width: 100%;
   height: 100%;
   max-height: 500px;
@@ -203,7 +203,7 @@ body > main > article {
   align-items: center;
 }
 
-body > main > article.normal > main {
+body > main > article.normal > div {
   max-width: 1300px;
   width: 100%;
   display: grid;
@@ -211,13 +211,13 @@ body > main > article.normal > main {
   grid-template-rows: min-content min-content;
 }
 
-body > main > article.normal > main > .content {
+body > main > article.normal > div > .content {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 
-body > main > article.normal > main > .action {
+body > main > article.normal > div > .action {
   grid-column: 2;
   grid-row: 2;
 }
@@ -233,7 +233,7 @@ footer {
   color: var(--on-background-color-dim);
 }
 
-footer > main {
+footer > div {
   max-width: 1300px;
   width: 100%;
   display: flex;
@@ -669,16 +669,16 @@ button {
 @media (max-width: 720px) {
   /* Layout */
 
-  body > main > article.normal > main {
+  body > main > article.normal > div {
     grid-template-columns: 1fr;
     gap: 0;
   }
 
-  body > main > article.normal > main:has(.action) {
+  body > main > article.normal > div:has(.action) {
     gap: 3rem;
   }
 
-  body > main > article.normal > main > .action {
+  body > main > article.normal > div > .action {
     display: flex;
     justify-content: flex-end;
     grid-column: 1;

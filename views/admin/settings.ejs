@@ -4,23 +4,65 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CMS - Vojtěch Habeš</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/admin/css/style.css" />
   </head>
   <body>
-    <h1>Nastavení</h1>
+    <main class="box">
+      <h1>Nastavení</h1>
 
-    <a href="/admin">Zpět</a>
+      <section>
+        <h2>Změna hesla</h2>
+        <p>
+          Změna hesla je důležitá pro zabezpečení vašeho účtu. Zadejte staré a
+          nové heslo a stiskněte tlačítko pro změnu hesla.
+        </p>
+        <form id="changePassword">
+          <input
+            type="password"
+            id="oldPassword"
+            name="oldPassword"
+            placeholder="Staré heslo"
+          />
+          <input
+            type="password"
+            id="newPassword"
+            name="newPassword"
+            placeholder="Nové heslo"
+          />
+          <button type="submit" class="normal">
+            <i class="material-symbols-rounded">done</i>
+            Změnit heslo
+          </button>
+        </form>
+      </section>
 
-    <h2>Změna hesla</h2>
-    <form id="changePassword">
-      <label for="oldPassword">Staré heslo</label>
-      <input type="password" id="oldPassword" name="oldPassword" />
-      <label for="newPassword">Nové heslo</label>
-      <input type="password" id="newPassword" name="newPassword" />
-      <button type="submit">Změnit heslo</button>
-    </form>
-
-    <h2>Odhlášení</h2>
-    <button id="logout">Odhlásit se</button>
+      <section>
+        <h2>Odhlášení</h2>
+        <p>
+          Pokud se chcete odhlásit, stiskněte tlačítko níže. Budete přesměrováni
+          na přihlašovací stránku.
+        </p>
+        <button id="logout" class="normal">
+          <i class="material-symbols-rounded">logout</i>
+          Odhlásit se
+        </button>
+      </section>
+      <a href="/admin" class="back">
+        <i class="material-symbols-rounded">arrow_back</i>
+        Zpět
+      </a>
+    </main>
 
     <script>
       const logoutButton = document.querySelector("#logout");

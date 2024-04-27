@@ -1,17 +1,59 @@
 html {
-  font-size: min(2.5vw, 16px);
+  font-size: min(2.5vw, 18px);
 }
 
 body {
   background-color: #f0f0f0;
   font-family: "DM Sans", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  min-height: 100vh;
 }
 
 .material-symbols-rounded {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  font-size: 1.5rem;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 600px;
+  width: 100%;
+}
+
+.box > section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 2rem;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.box form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.back {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000000;
 }
 
 .columns {
+  width: 100%;
   display: grid;
   grid-template-columns: 300px 1fr;
   height: 100vh;
@@ -102,7 +144,7 @@ form input:focus {
   border-color: #000000;
 }
 
-form button {
+.icon-only {
   width: 2.5rem;
   min-width: 2.5rem;
   height: 2.5rem;
@@ -111,12 +153,50 @@ form button {
   border: none;
   background-color: #000000;
   color: #ffffff;
-  font-size: 1.5rem;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+}
+
+.normal {
+  width: fit-content;
+  padding: 0.5rem 0.8rem;
+  border: none;
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "DM Sans", sans-serif;
+}
+
+.icon-only-transparent {
+  font-size: 1.5rem;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: #000000;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.projects {
+  position: relative;
+}
+
+.projects > .icon-only-transparent {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
 }
 
 .projects > .projectsList {
@@ -144,14 +224,6 @@ form button {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  font-size: 1.5rem;
-  padding: 0;
-  border: none;
-  background-color: transparent;
-  color: #000000;
-  cursor: pointer;
-  justify-content: center;
-  align-items: center;
 }
 
 .projects > .projectsList article.active > .delete {
@@ -174,6 +246,11 @@ form button {
   cursor: not-allowed;
 }
 
+h1 {
+  font-size: 3.2rem;
+  font-weight: 600;
+}
+
 h2 {
   font-size: 2.2rem;
   font-weight: 600;
@@ -182,4 +259,9 @@ h2 {
 h3 {
   font-size: 1.4rem;
   font-weight: 600;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.2;
 }

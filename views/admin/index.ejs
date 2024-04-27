@@ -20,6 +20,10 @@
   <body>
     <main class="columns">
       <section class="projects">
+        <a href="/admin/settings" class="button icon-only-transparent">
+          <i class="material-symbols-rounded">settings</i>
+        </a>
+
         <h2>Projekty</h2>
 
         <ul class="projectsList">
@@ -28,7 +32,7 @@
 
         <form id="addProject">
           <input type="text" id="title" name="title" placeholder="Název" />
-          <button type="submit">
+          <button type="submit" class="icon-only">
             <i class="material-symbols-rounded">add</i>
           </button>
         </form>
@@ -41,7 +45,7 @@
           <form id="changeTitle">
             <fieldset disabled>
               <input type="text" id="title" name="title" placeholder="Název" />
-              <button type="submit">
+              <button type="submit" class="icon-only">
                 <i class="material-symbols-rounded">done</i>
               </button>
             </fieldset>
@@ -55,7 +59,7 @@
                 name="description"
                 placeholder="Popis"
               />
-              <button type="submit">
+              <button type="submit" class="icon-only">
                 <i class="material-symbols-rounded">done</i>
               </button>
             </fieldset>
@@ -68,8 +72,9 @@
                 name="content"
                 placeholder="Obsah"
               ></textarea>
-              <button type="submit">
+              <button type="submit" class="normal">
                 <i class="material-symbols-rounded">done</i>
+                Uložit obsah
               </button>
             </fieldset>
           </form>
@@ -120,7 +125,7 @@
               <article>
                 <h3>${project.title}</h3>
                 <p>${project.description || "Bez popisu"}</p>
-                <button class="delete">
+                <button class="delete icon-only-transparent">
                   <i class="material-symbols-rounded">delete</i>
                 </button>
               </article>

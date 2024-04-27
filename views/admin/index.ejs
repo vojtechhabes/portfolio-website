@@ -10,66 +10,99 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
     <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/admin/css/style.css" />
   </head>
   <body>
-    <section class="projects">
-      <h2>Projekty</h2>
+    <main class="columns">
+      <section class="projects">
+        <h2>Projekty</h2>
 
-      <ul class="projectsList">
-        <li>Načítání...</li>
-      </ul>
+        <ul class="projectsList">
+          <li>Načítání...</li>
+        </ul>
 
-      <form id="addProject">
-        <input type="text" id="title" name="title" placeholder="Název" />
-        <button type="submit">Přidat</button>
-      </form>
-    </section>
+        <form id="addProject">
+          <input type="text" id="title" name="title" placeholder="Název" />
+          <button type="submit">
+            <i class="material-symbols-rounded">add</i>
+          </button>
+        </form>
+      </section>
 
-    <section class="project">
-      <h2>Vybraný projekt</h2>
+      <section class="project">
+        <h2>Úprava projektu</h2>
 
-      <form id="changeTitle">
-        <input type="text" id="title" name="title" placeholder="Název" />
-        <button type="submit">Změnit</button>
-      </form>
+        <div class="forms">
+          <form id="changeTitle">
+            <fieldset disabled>
+              <input type="text" id="title" name="title" placeholder="Název" />
+              <button type="submit">
+                <i class="material-symbols-rounded">done</i>
+              </button>
+            </fieldset>
+          </form>
 
-      <form id="changeDescription">
-        <input
-          type="text"
-          id="description"
-          name="description"
-          placeholder="Popis"
-        />
-        <button type="submit">Změnit</button>
-      </form>
+          <form id="changeDescription">
+            <fieldset disabled>
+              <input
+                type="text"
+                id="description"
+                name="description"
+                placeholder="Popis"
+              />
+              <button type="submit">
+                <i class="material-symbols-rounded">done</i>
+              </button>
+            </fieldset>
+          </form>
 
-      <form id="changeContent">
-        <textarea id="content" name="content" placeholder="Obsah"></textarea>
-        <button type="submit">Změnit</button>
-      </form>
+          <form id="changeContent">
+            <fieldset disabled>
+              <textarea
+                id="content"
+                name="content"
+                placeholder="Obsah"
+              ></textarea>
+              <button type="submit">
+                <i class="material-symbols-rounded">done</i>
+              </button>
+            </fieldset>
+          </form>
 
-      <form id="deleteProject">
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Heslo"
-        />
-        <button type="submit">Smazat</button>
-      </form>
-    </section>
+          <!--
+          <form id="deleteProject">
+            <fieldset disabled>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Heslo"
+              />
+              <button type="submit">
+                <i class="material-symbols-rounded">delete</i>
+              </button>
+            </fieldset>
+          </form>
+          -->
+        </div>
+      </section>
+    </main>
 
     <script>
       const projectsList = document.querySelector(".projectsList");
       const addProjectForm = document.querySelector("#addProject");
-
+      const project = document.querySelector(".project");
       const changeTitleForm = document.querySelector("#changeTitle");
       const changeDescriptionForm =
         document.querySelector("#changeDescription");
       const changeContentForm = document.querySelector("#changeContent");
       const deleteProjectForm = document.querySelector("#deleteProject");
+      const fieldsets = project.querySelectorAll(".project fieldset");
 
       let projectsArray = [];
       let currentProjectIndex = null;
@@ -79,12 +112,19 @@
           ...projectsArray[currentProjectIndex],
           ...data,
         };
-        setProjects(projectsArray);
+
+        const article =
+          projectsList.querySelectorAll("article")[currentProjectIndex];
+        article.querySelector("h3").textContent =
+          projectsArray[currentProjectIndex].title;
+        article.querySelector("p").textContent =
+          projectsArray[currentProjectIndex].description || "Bez popisu";
       };
 
       const pushProject = async (project) => {
         projectsArray.push(project);
         setProjects(projectsArray);
+        changeCurrentProject(projectsArray.length - 1);
       };
 
       const setProjects = (data) => {
@@ -114,6 +154,10 @@
         }
 
         if (index !== null) {
+          for (const fieldset of fieldsets) {
+            fieldset.removeAttribute("disabled");
+          }
+
           if (currentProjectIndex !== null) {
             projectsList
               .querySelectorAll("article")
@@ -131,6 +175,10 @@
           changeContentForm.querySelector("#content").value =
             projectsArray[index].content || "";
         } else {
+          for (const fieldset of fieldsets) {
+            fieldset.setAttribute("disabled", "");
+          }
+
           if (currentProjectIndex !== null) {
             try {
               projectsList
@@ -174,7 +222,6 @@
           },
           body: JSON.stringify({ title }),
         });
-
         const data = await response.json();
 
         if (!response.ok) {
@@ -183,6 +230,7 @@
         }
 
         pushProject(data.project);
+        addProjectForm.querySelector("#title").value = "";
       });
 
       changeTitleForm.addEventListener("submit", async (event) => {
@@ -286,6 +334,7 @@
         projectsArray.splice(currentProjectIndex, 1);
         setProjects(projectsArray);
         changeCurrentProject(null);
+        deleteProjectForm.querySelector("#password").value = "";
       });
     </script>
   </body>

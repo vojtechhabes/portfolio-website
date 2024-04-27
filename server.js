@@ -3,6 +3,7 @@ Zdroje:
 - https://expressjs.com/en/resources/middleware/cors.html
 - https://www.w3schools.com/js/js_cookies.asp
 - https://stackoverflow.com/questions/44816519/how-to-get-cookie-value-in-expressjs
+- https://stackoverflow.com/questions/3507958/how-can-i-make-an-entire-html-form-readonly
 */
 
 const express = require("express");

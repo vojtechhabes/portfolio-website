@@ -73,22 +73,6 @@
               </button>
             </fieldset>
           </form>
-
-          <!--
-          <form id="deleteProject">
-            <fieldset disabled>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Heslo"
-              />
-              <button type="submit">
-                <i class="material-symbols-rounded">delete</i>
-              </button>
-            </fieldset>
-          </form>
-          -->
         </div>
       </section>
     </main>
@@ -101,7 +85,7 @@
       const changeDescriptionForm =
         document.querySelector("#changeDescription");
       const changeContentForm = document.querySelector("#changeContent");
-      const deleteProjectForm = document.querySelector("#deleteProject");
+      const deleteProject = document.querySelector("#deleteProject");
       const fieldsets = project.querySelectorAll(".project fieldset");
 
       let projectsArray = [];
@@ -136,6 +120,9 @@
               <article>
                 <h3>${project.title}</h3>
                 <p>${project.description || "Bez popisu"}</p>
+                <button class="delete">
+                  <i class="material-symbols-rounded">delete</i>
+                </button>
               </article>
             </li>`;
           })
@@ -145,14 +132,43 @@
           li.addEventListener("click", () => {
             changeCurrentProject(index);
           });
+
+          li.querySelector("button").addEventListener(
+            "click",
+            async (event) => {
+              event.stopPropagation();
+
+              const password = prompt("Zadejte heslo pro smazání projektu");
+
+              if (!password) {
+                return;
+              }
+
+              const response = await fetch(
+                `/api/project/${projectsArray[index]._id}`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ password }),
+                }
+              );
+
+              if (!response.ok) {
+                alert("Nastala chyba při mazání projektu");
+                return;
+              }
+
+              projectsArray.splice(index, 1);
+              setProjects(projectsArray);
+              changeCurrentProject(null);
+            }
+          );
         });
       };
 
       const changeCurrentProject = async (index) => {
-        if (index === currentProjectIndex) {
-          return changeCurrentProject(null);
-        }
-
         if (index !== null) {
           for (const fieldset of fieldsets) {
             fieldset.removeAttribute("disabled");
@@ -307,34 +323,6 @@
         }
 
         updateCurrentProject({ content });
-      });
-
-      deleteProjectForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const password = deleteProjectForm.querySelector("#password").value;
-
-        const response = await fetch(
-          `/api/project/${projectsArray[currentProjectIndex]._id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ password }),
-          }
-        );
-        const data = await response.json();
-
-        if (!response.ok) {
-          alert("Nastala chyba při mazání projektu");
-          return;
-        }
-
-        projectsArray.splice(currentProjectIndex, 1);
-        setProjects(projectsArray);
-        changeCurrentProject(null);
-        deleteProjectForm.querySelector("#password").value = "";
       });
     </script>
   </body>

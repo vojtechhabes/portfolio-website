@@ -3,16 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Přihlášení - Vojtěch Habeš</title>
+    <title>CMS - Vojtěch Habeš</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/admin/css/style.css" />
   </head>
   <body>
-    <form>
-      <label for="username">Přihlašovací jméno</label>
-      <input type="text" id="username" name="username" />
-      <label for="password">Heslo</label>
-      <input type="password" id="password" name="password" />
-      <button type="submit">Přihlásit se</button>
-    </form>
+    <main class="box">
+      <h1>CMS</h1>
+      <section>
+        <h2>Přihlášení</h2>
+        <form>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Uživatelské jméno"
+          />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Heslo"
+          />
+          <button type="submit" class="normal">
+            <i class="material-symbols-rounded">login</i>
+            Přihlásit se
+          </button>
+        </form>
+      </section>
+    </main>
 
     <script>
       const form = document.querySelector("form");

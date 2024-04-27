@@ -88,4 +88,8 @@ router.get("/admin", authMiddleware, async (req, res) => {
   res.render("admin/index", { user: req.user });
 });
 
+router.get("/admin/settings", authMiddleware, async (req, res) => {
+  res.render("admin/settings", { user: req.user });
+});
+
 module.exports = router;

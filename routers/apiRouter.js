@@ -127,7 +127,7 @@ router.post("/auth/logout", authMiddleware, async (req, res) => {
   }
 });
 
-router.patch(
+router.post(
   "/auth/password",
   authMiddleware,
   passwordMiddleware,
@@ -147,6 +147,9 @@ router.patch(
 
       await User.updateOne({ _id: req.user._id }, { passwordHash });
       await RefreshToken.deleteMany({ userId: req.user._id });
+
+      res.clearCookie("accessToken");
+      res.clearCookie("refreshToken");
 
       return res.status(200).json({
         code: "password-updated",

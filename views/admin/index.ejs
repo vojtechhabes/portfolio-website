@@ -7,20 +7,7 @@
   </head>
   <body>
     <h1>Vítejte, <%= user.username %></h1>
-    <button id="logout">Odhlásit se</button>
 
-    <script>
-      const logoutButton = document.querySelector("#logout");
-
-      logoutButton.addEventListener("click", async () => {
-        const response = await fetch("/api/auth/logout", {
-          method: "POST",
-        });
-
-        if (response.ok) {
-          window.location.href = "/admin/login";
-        }
-      });
-    </script>
+    <a href="/admin/settings">Nastavení</a>
   </body>
 </html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CMS - Vojtěch Habeš</title>
+  </head>
+  <body>
+    <h1>Nastavení</h1>
+
+    <a href="/admin">Zpět</a>
+
+    <h2>Změna hesla</h2>
+    <form id="changePassword">
+      <label for="oldPassword">Staré heslo</label>
+      <input type="password" id="oldPassword" name="oldPassword" />
+      <label for="newPassword">Nové heslo</label>
+      <input type="password" id="newPassword" name="newPassword" />
+      <button type="submit">Změnit heslo</button>
+    </form>
+
+    <h2>Odhlášení</h2>
+    <button id="logout">Odhlásit se</button>
+
+    <script>
+      const logoutButton = document.querySelector("#logout");
+
+      logoutButton.addEventListener("click", async () => {
+        const response = await fetch("/api/auth/logout", {
+          method: "POST",
+        });
+
+        if (response.ok) {
+          window.location.href = "/admin/login";
+        }
+      });
+
+      const form = document.querySelector("#changePassword");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const password = document.querySelector("#oldPassword").value;
+        const newPassword = document.querySelector("#newPassword").value;
+
+        const response = await fetch("/api/auth/password", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ password, newPassword }),
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+
+          switch (data.code) {
+            case "incorrect-password":
+              alert("Nesprávné staré heslo");
+              break;
+            case "server-error":
+              alert("Nastala chyba na serveru");
+              break;
+            default:
+              alert("Nastala neznámá chyba");
+              break;
+          }
+          return;
+        }
+
+        alert("Heslo bylo změněno. Prosím, přihlašte se znovu.");
+        window.location.href = "/admin/login";
+      });
+    </script>
+  </body>
+</html>

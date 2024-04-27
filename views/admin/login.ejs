@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Přihlášení - Vojtěch Habeš</title>
+  </head>
+  <body>
+    <form>
+      <label for="username">Přihlašovací jméno</label>
+      <input type="text" id="username" name="username" />
+      <label for="password">Heslo</label>
+      <input type="password" id="password" name="password" />
+      <button type="submit">Přihlásit se</button>
+    </form>
+
+    <script>
+      const form = document.querySelector("form");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const username = document.querySelector("#username").value;
+        const password = document.querySelector("#password").value;
+
+        const response = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          switch (data.code) {
+            case "incorrect-credentials":
+              alert("Nesprávné přihlašovací údaje");
+              break;
+            case "server-error":
+              alert("Nastala chyba na serveru");
+              break;
+            default:
+              alert("Nastala neznámá chyba");
+              break;
+          }
+          return;
+        }
+
+        window.location.href = "/admin";
+      });
+    </script>
+  </body>
+</html>

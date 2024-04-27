@@ -2,11 +2,13 @@
 Zdroje:
 - https://expressjs.com/en/resources/middleware/cors.html
 - https://www.w3schools.com/js/js_cookies.asp
+- https://stackoverflow.com/questions/44816519/how-to-get-cookie-value-in-expressjs
 */
 
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 const corsOptions = {
@@ -19,6 +21,7 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use("/api", express.json());
 app.use("/api", (error, req, res, next) => {
   if (error instanceof SyntaxError) {

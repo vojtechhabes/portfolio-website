@@ -7,7 +7,6 @@ const Project = require("../models/project");
 const {
   generateAccessToken,
   generateRefreshToken,
-  refreshBothTokens,
   validateRefreshToken,
 } = require("../utils/tokenManagement");
 const {
@@ -63,9 +62,18 @@ router.post("/auth/login", async (req, res) => {
     const accessToken = generateAccessToken(user._id);
     const refreshToken = await generateRefreshToken(user._id);
 
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      sameSite: "strict",
+    });
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      sameSite: "strict",
+    });
+
     return res.status(200).json({
-      accessToken,
-      refreshToken,
+      code: "login-success",
+      message: "The user has been successfully logged in.",
       user: {
         _id: user._id,
         username: user.username,
@@ -81,28 +89,9 @@ router.post("/auth/login", async (req, res) => {
   }
 });
 
-router.post("/auth/refresh", async (req, res) => {
-  const { refreshToken } = req.body;
-  if (!refreshToken) {
-    return res.status(400).json({
-      code: "missing-token",
-      message: "A refresh token is required.",
-    });
-  }
+router.post("/auth/logout", authMiddleware, async (req, res) => {
+  const { refreshToken } = req.cookies;
 
-  const tokens = await refreshBothTokens(refreshToken);
-  if (!tokens) {
-    return res.status(401).json({
-      code: "invalid-token",
-      message: "The provided refresh token is invalid.",
-    });
-  }
-
-  return res.status(200).json(tokens);
-});
-
-router.post("/auth/logout", async (req, res) => {
-  const { refreshToken } = req.body;
   if (!refreshToken) {
     return res.status(400).json({
       code: "missing-token",
@@ -119,6 +108,9 @@ router.post("/auth/logout", async (req, res) => {
       });
     }
     await RefreshToken.deleteOne({ token: refreshToken });
+
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
 
     return res.status(200).json({
       code: "logout-success",
@@ -139,6 +131,7 @@ router.patch(
   passwordMiddleware,
   async (req, res) => {
     const { newPassword } = req.body;
+
     if (!newPassword) {
       return res.status(400).json({
         code: "missing-password",

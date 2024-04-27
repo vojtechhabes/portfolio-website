@@ -9,5 +9,77 @@
     <h1>Vítejte, <%= user.username %></h1>
 
     <a href="/admin/settings">Nastavení</a>
+
+    <h2>Projekty</h2>
+
+    <ul class="projects">
+      <li>Načítání...</li>
+    </ul>
+
+    <form id="addProject">
+      <input type="text" id="title" name="title" placeholder="Název" />
+      <button type="submit">Přidat</button>
+    </form>
+
+    <script>
+      let projects = [];
+      const form = document.querySelector("#addProject");
+      const projectsList = document.querySelector(".projects");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const title = document.querySelector("#title").value;
+
+        const response = await fetch("/api/project", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ title }),
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          alert("Nastala chyba při přidávání projektu");
+          return;
+        }
+
+        projects.push(data.project);
+        console.log(projects);
+        displayProjects();
+      });
+
+      const loadProjects = async () => {
+        const response = await fetch("/api/project");
+        const data = await response.json();
+
+        if (!response.ok) {
+          return;
+        }
+
+        if (data.projects.length === 0) {
+          projectsList.innerHTML = "<li>Žádné projekty</li>";
+          return;
+        }
+
+        projects = data.projects;
+        displayProjects();
+      };
+
+      const displayProjects = () => {
+        projectsList.innerHTML = projects
+          .map(
+            (project) =>
+              `<li data-id="${project._id}">
+                <h3>${project.title}</h3>
+                <p>${project.description || "Žádný popis"}</p>
+              </li>`
+          )
+          .join("");
+      };
+
+      loadProjects();
+    </script>
   </body>
 </html>

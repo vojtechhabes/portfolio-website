@@ -245,7 +245,7 @@ router.delete(
 
 router.get("/project", authMiddleware, async (req, res) => {
   try {
-    const projects = await Project.find({ userId: req.user._id });
+    const projects = await Project.find();
 
     return res.status(200).json({
       code: "projects-found",

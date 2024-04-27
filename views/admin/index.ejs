@@ -10,26 +10,156 @@
 
     <a href="/admin/settings">Nastavení</a>
 
-    <h2>Projekty</h2>
+    <section class="projects">
+      <h2>Projekty</h2>
 
-    <ul class="projects">
-      <li>Načítání...</li>
-    </ul>
+      <ul class="projectsList">
+        <li>Načítání...</li>
+      </ul>
 
-    <form id="addProject">
-      <input type="text" id="title" name="title" placeholder="Název" />
-      <button type="submit">Přidat</button>
-    </form>
+      <form id="addProject">
+        <input type="text" id="title" name="title" placeholder="Název" />
+        <button type="submit">Přidat</button>
+      </form>
+    </section>
+
+    <section class="project">
+      <h2>Vybraný projekt</h2>
+
+      <form id="changeTitle">
+        <input type="text" id="title" name="title" placeholder="Název" />
+        <button type="submit">Změnit</button>
+      </form>
+
+      <form id="changeDescription">
+        <input
+          type="text"
+          id="description"
+          name="description"
+          placeholder="Popis"
+        />
+        <button type="submit">Změnit</button>
+      </form>
+
+      <form id="changeContent">
+        <textarea id="content" name="content" placeholder="Obsah"></textarea>
+        <button type="submit">Změnit</button>
+      </form>
+
+      <form id="deleteProject">
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Heslo"
+        />
+        <button type="submit">Smazat</button>
+      </form>
+    </section>
 
     <script>
-      let projects = [];
-      const form = document.querySelector("#addProject");
-      const projectsList = document.querySelector(".projects");
+      const projectsList = document.querySelector(".projectsList");
+      const addProjectForm = document.querySelector("#addProject");
 
-      form.addEventListener("submit", async (event) => {
+      const changeTitleForm = document.querySelector("#changeTitle");
+      const changeDescriptionForm =
+        document.querySelector("#changeDescription");
+      const changeContentForm = document.querySelector("#changeContent");
+      const deleteProjectForm = document.querySelector("#deleteProject");
+
+      let projectsArray = [];
+      let currentProjectIndex = null;
+
+      const updateCurrentProject = async (data) => {
+        projectsArray[currentProjectIndex] = {
+          ...projectsArray[currentProjectIndex],
+          ...data,
+        };
+        setProjects(projectsArray);
+      };
+
+      const pushProject = async (project) => {
+        projectsArray.push(project);
+        setProjects(projectsArray);
+      };
+
+      const setProjects = (data) => {
+        projectsArray = data;
+
+        projectsList.innerHTML = projectsArray
+          .map((project, index) => {
+            return `<li>
+              <article>
+                <h3>${project.title}</h3>
+                <p>${project.description || "Bez popisu"}</p>
+              </article>
+            </li>`;
+          })
+          .join("");
+
+        projectsList.querySelectorAll("li").forEach((li, index) => {
+          li.addEventListener("click", () => {
+            changeCurrentProject(index);
+          });
+        });
+      };
+
+      const changeCurrentProject = async (index) => {
+        if (index === currentProjectIndex) {
+          return changeCurrentProject(null);
+        }
+
+        if (index !== null) {
+          if (currentProjectIndex !== null) {
+            projectsList
+              .querySelectorAll("li")
+              [currentProjectIndex].classList.remove("active");
+          }
+          projectsList.querySelectorAll("li")[index].classList.add("active");
+          currentProjectIndex = index;
+
+          changeTitleForm.querySelector("#title").value =
+            projectsArray[index].title || "";
+          changeDescriptionForm.querySelector("#description").value =
+            projectsArray[index].description || "";
+          changeContentForm.querySelector("#content").value =
+            projectsArray[index].content || "";
+        } else {
+          if (currentProjectIndex !== null) {
+            try {
+              projectsList
+                .querySelectorAll("li")
+                [currentProjectIndex].classList.remove("active");
+            } catch (error) {
+              // Do nothing because the project was deleted
+            }
+          }
+          currentProjectIndex = null;
+
+          changeTitleForm.querySelector("#title").value = "";
+          changeDescriptionForm.querySelector("#description").value = "";
+          changeContentForm.querySelector("#content").value = "";
+        }
+      };
+
+      const loadProjects = async () => {
+        const response = await fetch("/api/project");
+        const data = await response.json();
+
+        if (!response.ok) {
+          alert("Nastala chyba při načítání projektů");
+          return;
+        }
+
+        setProjects(data.projects);
+      };
+
+      loadProjects();
+
+      addProjectForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        const title = document.querySelector("#title").value;
+        const title = addProjectForm.querySelector("#title").value;
 
         const response = await fetch("/api/project", {
           method: "POST",
@@ -38,6 +168,7 @@
           },
           body: JSON.stringify({ title }),
         });
+
         const data = await response.json();
 
         if (!response.ok) {
@@ -45,41 +176,111 @@
           return;
         }
 
-        projects.push(data.project);
-        console.log(projects);
-        displayProjects();
+        pushProject(data.project);
       });
 
-      const loadProjects = async () => {
-        const response = await fetch("/api/project");
+      changeTitleForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const title = changeTitleForm.querySelector("#title").value;
+
+        const response = await fetch(
+          `/api/project/${projectsArray[currentProjectIndex]._id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ title }),
+          }
+        );
         const data = await response.json();
 
         if (!response.ok) {
+          alert("Nastala chyba při změně názvu projektu");
           return;
         }
 
-        if (data.projects.length === 0) {
-          projectsList.innerHTML = "<li>Žádné projekty</li>";
+        updateCurrentProject({ title });
+      });
+
+      changeDescriptionForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const description =
+          changeDescriptionForm.querySelector("#description").value;
+
+        const response = await fetch(
+          `/api/project/${projectsArray[currentProjectIndex]._id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ description }),
+          }
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          alert("Nastala chyba při změně popisu projektu");
           return;
         }
 
-        projects = data.projects;
-        displayProjects();
-      };
+        updateCurrentProject({ description });
+      });
 
-      const displayProjects = () => {
-        projectsList.innerHTML = projects
-          .map(
-            (project) =>
-              `<li data-id="${project._id}">
-                <h3>${project.title}</h3>
-                <p>${project.description || "Žádný popis"}</p>
-              </li>`
-          )
-          .join("");
-      };
+      changeContentForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-      loadProjects();
+        const content = changeContentForm.querySelector("#content").value;
+
+        const response = await fetch(
+          `/api/project/${projectsArray[currentProjectIndex]._id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ content }),
+          }
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          alert("Nastala chyba při změně obsahu projektu");
+          return;
+        }
+
+        updateCurrentProject({ content });
+      });
+
+      deleteProjectForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const password = deleteProjectForm.querySelector("#password").value;
+
+        const response = await fetch(
+          `/api/project/${projectsArray[currentProjectIndex]._id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ password }),
+          }
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          alert("Nastala chyba při mazání projektu");
+          return;
+        }
+
+        projectsArray.splice(currentProjectIndex, 1);
+        setProjects(projectsArray);
+        changeCurrentProject(null);
+      });
     </script>
   </body>
 </html>

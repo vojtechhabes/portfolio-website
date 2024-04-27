@@ -145,8 +145,9 @@ body > main > article.post ul {
 body > main > article.post ul > li {
   list-style: circle;
   gap: 1rem;
-  font-size: 1.6rem;
-  font-weight: 300;
+  font-size: 1.4rem;
+  font-weight: 200;
+  line-height: 1.2;
 }
 
 /* Layout */

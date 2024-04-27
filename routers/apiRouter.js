@@ -65,10 +65,12 @@ router.post("/auth/login", async (req, res) => {
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       sameSite: "strict",
+      expires: new Date(Date.now() + 10 * 60 * 1000),
     });
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       sameSite: "strict",
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     });
 
     return res.status(200).json({

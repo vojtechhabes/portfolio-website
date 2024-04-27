@@ -68,10 +68,12 @@ router.get("/admin/login", async (req, res) => {
         res.cookie("accessToken", tokens.accessToken, {
           httpOnly: true,
           sameSite: "strict",
+          expires: new Date(Date.now() + 10 * 60 * 1000),
         });
         res.cookie("refreshToken", tokens.refreshToken, {
           httpOnly: true,
           sameSite: "strict",
+          expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         });
 
         return res.redirect("/admin");

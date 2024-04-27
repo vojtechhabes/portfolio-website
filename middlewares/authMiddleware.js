@@ -61,10 +61,12 @@ const authMiddleware = async (req, res, next) => {
       res.cookie("accessToken", newTokens.accessToken, {
         httpOnly: true,
         sameSite: "strict",
+        expires: new Date(Date.now() + 10 * 60 * 1000),
       });
       res.cookie("refreshToken", newTokens.refreshToken, {
         httpOnly: true,
         sameSite: "strict",
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       });
 
       const userId = jwt.decode(newTokens.accessToken).userId;

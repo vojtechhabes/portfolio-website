@@ -6,9 +6,7 @@
     <title>CMS - Vojtěch Habeš</title>
   </head>
   <body>
-    <h1>CMS</h1>
-    <!--show user json-->
-    <pre><%= JSON.stringify(user, null, 2) %></pre>
+    <h1>Vítejte, <%= user.username %></h1>
     <button id="logout">Odhlásit se</button>
 
     <script>

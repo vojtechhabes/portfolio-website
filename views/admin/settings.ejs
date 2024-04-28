@@ -64,6 +64,7 @@
       </a>
     </main>
 
+    <script src="/admin/js/notifications.js"></script>
     <script>
       const logoutButton = document.querySelector("#logout");
 
@@ -98,13 +99,13 @@
 
           switch (data.code) {
             case "incorrect-password":
-              alert("Nesprávné staré heslo");
+              createNotification("Nesprávné heslo", "error");
               break;
             case "server-error":
-              alert("Nastala chyba na serveru");
+              createNotification("Nastala chyba na serveru", "error");
               break;
             default:
-              alert("Nastala neznámá chyba");
+              createNotification("Nastala neznámá chyba", "error");
               break;
           }
           return;

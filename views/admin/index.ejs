@@ -82,6 +82,7 @@
       </section>
     </main>
 
+    <script src="/admin/js/notifications.js"></script>
     <script>
       const projectsList = document.querySelector(".projectsList");
       const addProjectForm = document.querySelector("#addProject");
@@ -159,12 +160,24 @@
                   body: JSON.stringify({ password }),
                 }
               );
+              const data = await response.json();
 
               if (!response.ok) {
-                alert("Nastala chyba při mazání projektu");
+                switch (data.code) {
+                  case "incorrect-password":
+                    createNotification("Zadali jste nesprávné heslo", "error");
+                    break;
+                  case "server-error":
+                    createNotification("Nastala chyba na serveru", "error");
+                    break;
+                  default:
+                    createNotification("Nastala neznámá chyba", "error");
+                    break;
+                }
                 return;
               }
 
+              createNotification("Projekt byl úspěšně smazán", "success");
               projectsArray.splice(index, 1);
               setProjects(projectsArray);
               changeCurrentProject(null);
@@ -246,10 +259,11 @@
         const data = await response.json();
 
         if (!response.ok) {
-          alert("Nastala chyba při přidávání projektu");
+          createNotification("Nastala chyba při vytváření projektu", "error");
           return;
         }
 
+        createNotification("Projekt byl úspěšně vytvořen", "success");
         pushProject(data.project);
         addProjectForm.querySelector("#title").value = "";
       });
@@ -272,10 +286,11 @@
         const data = await response.json();
 
         if (!response.ok) {
-          alert("Nastala chyba při změně názvu projektu");
+          createNotification("Nastala chyba při změně názvu projektu", "error");
           return;
         }
 
+        createNotification("Název projektu byl uložen", "success");
         updateCurrentProject({ title });
       });
 
@@ -298,10 +313,14 @@
         const data = await response.json();
 
         if (!response.ok) {
-          alert("Nastala chyba při změně popisu projektu");
+          createNotification(
+            "Nastala chyba při změně popisu projektu",
+            "error"
+          );
           return;
         }
 
+        createNotification("Popis projektu byl uložen", "success");
         updateCurrentProject({ description });
       });
 
@@ -323,10 +342,14 @@
         const data = await response.json();
 
         if (!response.ok) {
-          alert("Nastala chyba při změně obsahu projektu");
+          createNotification(
+            "Nastala chyba při změně obsahu projektu",
+            "error"
+          );
           return;
         }
 
+        createNotification("Obsah projektu byl uložen", "success");
         updateCurrentProject({ content });
       });
     </script>

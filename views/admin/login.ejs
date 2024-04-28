@@ -43,6 +43,7 @@
       </section>
     </main>
 
+    <script src="/admin/js/notifications.js"></script>
     <script>
       const form = document.querySelector("form");
 
@@ -64,13 +65,13 @@
         if (!response.ok) {
           switch (data.code) {
             case "incorrect-credentials":
-              alert("Nesprávné přihlašovací údaje");
+              createNotification("Nesprávné přihlašovací údaje", "error");
               break;
             case "server-error":
-              alert("Nastala chyba na serveru");
+              createNotification("Nastala chyba na serveru", "error");
               break;
             default:
-              alert("Nastala neznámá chyba");
+              createNotification("Nastala neznámá chyba", "error");
               break;
           }
           return;

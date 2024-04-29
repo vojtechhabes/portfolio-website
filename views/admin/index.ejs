@@ -84,12 +84,10 @@
             <i class="material-symbols-rounded">visibility</i>
             Zveřejnit
           </button>
-          <!--
-          <button id="importantButton" class="normal">
+
+          <button id="starButton" class="icon-only" disabled>
             <i class="material-symbols-rounded">star</i>
-            Označit významným
           </button>
-          -->
         </section>
       </section>
     </main>
@@ -106,7 +104,7 @@
       const deleteProject = document.querySelector("#deleteProject");
       const fieldsets = project.querySelectorAll(".project fieldset");
       const publishButton = project.querySelector("#publishButton");
-      const importantButton = project.querySelector("#importantButton");
+      const starButton = project.querySelector("#starButton");
 
       let projectsArray = [];
       let currentProjectIndex = null;
@@ -207,6 +205,7 @@
           }
 
           publishButton.removeAttribute("disabled");
+          starButton.removeAttribute("disabled");
 
           if (currentProjectIndex !== null) {
             projectsList
@@ -228,12 +227,17 @@
           publishButton.innerHTML = projectsArray[index].published
             ? '<i class="material-symbols-rounded">visibility_off</i>Skrýt'
             : '<i class="material-symbols-rounded">visibility</i>Zveřejnit';
+
+          starButton.innerHTML = projectsArray[index].starred
+            ? '<i class="material-symbols-rounded filled">star</i>'
+            : '<i class="material-symbols-rounded">star</i>';
         } else {
           for (const fieldset of fieldsets) {
             fieldset.setAttribute("disabled", "");
           }
 
           publishButton.setAttribute("disabled", "");
+          starButton.setAttribute("disabled", "");
 
           if (currentProjectIndex !== null) {
             try {
@@ -413,6 +417,47 @@
           published: projectsArray[currentProjectIndex].published
             ? false
             : true,
+        });
+      });
+
+      starButton.addEventListener("click", async () => {
+        const response = await fetch(
+          `/api/project/${projectsArray[currentProjectIndex]._id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              starred: projectsArray[currentProjectIndex].starred
+                ? false
+                : true,
+            }),
+          }
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          createNotification(
+            "Nastala chyba při změně hvězdičky projektu",
+            "error"
+          );
+          return;
+        }
+
+        createNotification(
+          projectsArray[currentProjectIndex].starred
+            ? "Projekt byl odebrán z označených"
+            : "Projekt byl označen",
+          "success"
+        );
+
+        starButton.innerHTML = projectsArray[currentProjectIndex].starred
+          ? '<i class="material-symbols-rounded">star</i>'
+          : '<i class="material-symbols-rounded filled">star</i>';
+
+        updateCurrentProject({
+          starred: projectsArray[currentProjectIndex].starred ? false : true,
         });
       });
     </script>

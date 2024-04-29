@@ -17,6 +17,11 @@ body {
   font-size: 1.5rem;
 }
 
+.material-symbols-rounded.filled {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+  font-size: 1.5rem;
+}
+
 .notifications {
   position: fixed;
   top: 1.5rem;
@@ -145,6 +150,8 @@ body {
   position: absolute;
   left: 1.5rem;
   bottom: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
 }
 
 #changeContent {

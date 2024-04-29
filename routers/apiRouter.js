@@ -193,6 +193,7 @@ router.post("/project", authMiddleware, async (req, res) => {
         published: newProject.published,
         userId: newProject.userId,
         createdAt: newProject.createdAt,
+        starred: newProject.starred,
       },
     });
   } catch (error) {
@@ -257,6 +258,7 @@ router.get("/project", authMiddleware, async (req, res) => {
         published: project.published,
         userId: project.userId,
         createdAt: project.createdAt,
+        starred: project.starred,
       })),
     });
   } catch (error) {
@@ -270,7 +272,7 @@ router.get("/project", authMiddleware, async (req, res) => {
 
 router.patch("/project/:id", authMiddleware, async (req, res) => {
   const { id } = req.params;
-  const { title, content, published, description } = req.body;
+  const { title, content, published, description, starred } = req.body;
 
   try {
     const project = await Project.findOne({ _id: id });
@@ -281,7 +283,7 @@ router.patch("/project/:id", authMiddleware, async (req, res) => {
       });
     }
 
-    if (title) {
+    if (title !== undefined) {
       if (typeof title !== "string") {
         return res.status(400).json({
           code: "invalid-title",
@@ -311,7 +313,7 @@ router.patch("/project/:id", authMiddleware, async (req, res) => {
       project.published = published;
     }
 
-    if (description) {
+    if (description !== undefined) {
       if (typeof description !== "string") {
         return res.status(400).json({
           code: "invalid-description",
@@ -319,6 +321,16 @@ router.patch("/project/:id", authMiddleware, async (req, res) => {
         });
       }
       project.description = description;
+    }
+
+    if (starred !== undefined) {
+      if (typeof starred !== "boolean") {
+        return res.status(400).json({
+          code: "invalid-starred",
+          message: "The starred field must be a boolean.",
+        });
+      }
+      project.starred = starred;
     }
 
     await project.save();
@@ -334,6 +346,7 @@ router.patch("/project/:id", authMiddleware, async (req, res) => {
         published: project.published,
         userId: project.userId,
         createdAt: project.createdAt,
+        starred: project.starred,
       },
     });
   } catch (error) {

@@ -5,8 +5,19 @@ const showdown = require("showdown");
 
 const converter = new showdown.Converter();
 
-router.get("/", (req, res) => {
-  res.render("index");
+router.get("/", async (req, res) => {
+  try {
+    const allProjects = await Project.find({ published: true });
+    const starredProjects = allProjects.filter((project) => project.starred);
+
+    return res.render("index", {
+      starredProjects,
+      remainingProjectsCount: allProjects.length - starredProjects.length,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).render("error");
+  }
 });
 
 router.get("/about", (req, res) => {

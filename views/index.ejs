@@ -40,34 +40,26 @@
         <div>
           <section class="content">
             <h2>Mé <span class="highlight">nejlepší</span> projekty.</h2>
+            <% if (starredProjects.length !== 0) { %>
             <ul class="list">
+              <% for (const project of starredProjects) { %>
               <li>
-                <a href="/projects">
+                <a href="/projects/<%=project._id%>">
                   <article>
-                    <h3>Projekt 1</h3>
-                    <p>Popis projektu 1</p>
+                    <h3><%=project.title%></h3>
+                    <p><%=project.description%></p>
                   </article>
                 </a>
               </li>
-              <li>
-                <a href="/projects">
-                  <article>
-                    <h3>Projekt 2</h3>
-                    <p>Popis projektu 2</p>
-                  </article>
-                </a>
-              </li>
-              <li>
-                <a href="/projects">
-                  <article>
-                    <h3>Projekt 3</h3>
-                    <p>Popis projektu 3</p>
-                  </article>
-                </a>
-              </li>
+              <% } %>
             </ul>
-
-            <a href="/projects" class="text-dim">+2 další projekty</a>
+            <% } else { %>
+            <p>Žádné významné projekty nebyly nalezeny.</p>
+            <% } %> <% if (remainingProjectsCount > 0) { %>
+            <a href="/projects" class="text-dim"
+              >+<%=remainingProjectsCount%> dalších</a
+            >
+            <% } %>
           </section>
           <section class="action">
             <a href="/projects" class="button big primary">Všechny projekty</a>

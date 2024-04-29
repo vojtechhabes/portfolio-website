@@ -41,7 +41,7 @@
       <section class="project">
         <h2>Úprava projektu</h2>
 
-        <div class="forms">
+        <sections class="forms">
           <form id="changeTitle">
             <fieldset disabled>
               <input type="text" id="title" name="title" placeholder="Název" />
@@ -78,7 +78,19 @@
               </button>
             </fieldset>
           </form>
-        </div>
+        </sections>
+        <section class="action">
+          <button id="publishButton" class="normal" disabled>
+            <i class="material-symbols-rounded">visibility</i>
+            Zveřejnit
+          </button>
+          <!--
+          <button id="importantButton" class="normal">
+            <i class="material-symbols-rounded">star</i>
+            Označit významným
+          </button>
+          -->
+        </section>
       </section>
     </main>
 
@@ -93,6 +105,8 @@
       const changeContentForm = document.querySelector("#changeContent");
       const deleteProject = document.querySelector("#deleteProject");
       const fieldsets = project.querySelectorAll(".project fieldset");
+      const publishButton = project.querySelector("#publishButton");
+      const importantButton = project.querySelector("#importantButton");
 
       let projectsArray = [];
       let currentProjectIndex = null;
@@ -192,6 +206,8 @@
             fieldset.removeAttribute("disabled");
           }
 
+          publishButton.removeAttribute("disabled");
+
           if (currentProjectIndex !== null) {
             projectsList
               .querySelectorAll("article")
@@ -208,10 +224,16 @@
             projectsArray[index].description || "";
           changeContentForm.querySelector("#content").value =
             projectsArray[index].content || "";
+
+          publishButton.innerHTML = projectsArray[index].published
+            ? '<i class="material-symbols-rounded">visibility_off</i>Skrýt'
+            : '<i class="material-symbols-rounded">visibility</i>Zveřejnit';
         } else {
           for (const fieldset of fieldsets) {
             fieldset.setAttribute("disabled", "");
           }
+
+          publishButton.setAttribute("disabled", "");
 
           if (currentProjectIndex !== null) {
             try {
@@ -351,6 +373,47 @@
 
         createNotification("Obsah projektu byl uložen", "success");
         updateCurrentProject({ content });
+      });
+
+      publishButton.addEventListener("click", async () => {
+        const response = await fetch(
+          `/api/project/${projectsArray[currentProjectIndex]._id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              published: projectsArray[currentProjectIndex].published
+                ? false
+                : true,
+            }),
+          }
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          createNotification(
+            "Nastala chyba při změně zveřejnění projektu",
+            "error"
+          );
+          return;
+        }
+
+        createNotification(
+          projectsArray[currentProjectIndex].published
+            ? "Projekt byl úspěšně skryt"
+            : "Projekt byl úspěšně zveřejněn",
+          "success"
+        );
+        publishButton.innerHTML = projectsArray[currentProjectIndex].published
+          ? '<i class="material-symbols-rounded">visibility</i>Zveřejnit'
+          : '<i class="material-symbols-rounded">visibility_off</i>Skrýt';
+        updateCurrentProject({
+          published: projectsArray[currentProjectIndex].published
+            ? false
+            : true,
+        });
       });
     </script>
   </body>

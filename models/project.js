@@ -12,6 +12,11 @@ const project = new mongoose.Schema(
     content: {
       type: String,
     },
+    starred: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     published: {
       type: Boolean,
       required: true,

@@ -2,12 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Project = require("../models/project");
 const showdown = require("showdown");
-const { authMiddleware } = require("../middlewares/authMiddleware");
-const {
-  validateAccessToken,
-  validateRefreshToken,
-  refreshBothTokens,
-} = require("../utils/tokenManagement");
 
 const converter = new showdown.Converter();
 
@@ -21,7 +15,7 @@ router.get("/about", (req, res) => {
 
 router.get("/projects", async (req, res) => {
   try {
-    const projects = await Project.find();
+    const projects = await Project.find({ published: true });
     return res.render("projects", { projects });
   } catch (error) {
     console.error(error);
@@ -33,7 +27,7 @@ router.get("/projects/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const project = await Project.findById(id);
+    const project = await Project.findOne({ _id: id, published: true });
     if (!project) {
       return res.status(404).render("notFound");
     }
@@ -48,48 +42,6 @@ router.get("/projects/:id", async (req, res) => {
     console.error(error);
     return res.status(500).render("error");
   }
-});
-
-router.get("/admin/login", async (req, res) => {
-  const { accessToken, refreshToken } = req.cookies;
-
-  if (accessToken) {
-    const user = await validateAccessToken(accessToken);
-    if (user) {
-      return res.redirect("/admin");
-    }
-  }
-
-  if (refreshToken) {
-    const token = await validateRefreshToken(refreshToken);
-    if (token) {
-      const tokens = await refreshBothTokens(refreshToken);
-      if (tokens) {
-        res.cookie("accessToken", tokens.accessToken, {
-          httpOnly: true,
-          sameSite: "strict",
-          expires: new Date(Date.now() + 10 * 60 * 1000),
-        });
-        res.cookie("refreshToken", tokens.refreshToken, {
-          httpOnly: true,
-          sameSite: "strict",
-          expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-        });
-
-        return res.redirect("/admin");
-      }
-    }
-  }
-
-  res.render("admin/login");
-});
-
-router.get("/admin", authMiddleware, async (req, res) => {
-  res.render("admin/index", { user: req.user });
-});
-
-router.get("/admin/settings", authMiddleware, async (req, res) => {
-  res.render("admin/settings", { user: req.user });
 });
 
 module.exports = router;

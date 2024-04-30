@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <%-include("./partials/head", { title: "Nenalezeno - Vojtěch Habeš" })%>
+  </head>
+  <body>
+    <%-include("./partials/header", { currentPage: null })%>
+
+    <main>
+      <article class="error">
+        <div>
+          <h2>Stránka nenalezena :(</h2>
+          <p>
+            Omlouvám se, ale hledaná stránka nebyla nalezena. Zkontrolujte
+            prosím URL adresu.
+          </p>
+        </div>
+      </article>
+    </main>
+  </body>
+</html>

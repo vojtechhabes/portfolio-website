@@ -13,7 +13,7 @@ const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: `http://localhost:${process.env.PORT || 3000}`,
   optionsSuccessStatus: 200,
 };
 
@@ -43,6 +43,10 @@ app.use("/admin", adminRouter);
 
 const apiRouter = require("./routers/apiRouter");
 app.use("/api", apiRouter);
+
+app.use((req, res) => {
+  res.status(404).render("notFound");
+});
 
 const startServer = async () => {
   let noDb = false;

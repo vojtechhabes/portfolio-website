@@ -197,7 +197,7 @@ body > main > article.secondary {
   color: var(--on-background-color);
 }
 
-body > main > article {
+body > main > article:not(.title-section) {
   padding: 3rem;
   display: flex;
   justify-content: center;
@@ -221,6 +221,24 @@ body > main > article.normal > div > .content {
 body > main > article.normal > div > .action {
   grid-column: 2;
   grid-row: 2;
+}
+
+body > main > article.error {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  height: auto;
+  min-height: 100vh;
+  padding-top: 7rem;
+  box-sizing: border-box;
+}
+
+body > main > article.error > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 2rem;
 }
 
 /* Footer */
@@ -685,7 +703,7 @@ button {
     grid-column: 1;
   }
 
-  body > main > article {
+  body > main > article:not(.title-section) {
     padding: 2rem;
   }
 

@@ -6,18 +6,18 @@
   <body>
     <%-include("./partials/header", { currentPage: "/projects" })%>
 
-    <header class="title-section">
-      <section class="image">
-        <!--Dynamic image will be done.-->
-        <img src="/images/wavetag.webp" alt="WaveTag" />
-      </section>
-      <section class="text">
-        <h1><%=project.title%></h1>
-        <p class="title-description"><%=project.description%></p>
-      </section>
-    </header>
-
     <main>
+      <article class="title-section">
+        <section class="image">
+          <!--Dynamic image will be done.-->
+          <img src="/images/wavetag.webp" alt="WaveTag" />
+        </section>
+        <section class="text">
+          <h1><%=project.title%></h1>
+          <p class="title-description"><%=project.description%></p>
+        </section>
+      </article>
+
       <article class="normal primary">
         <div>
           <section class="content">

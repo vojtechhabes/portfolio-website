@@ -4,6 +4,7 @@ Zdroje:
 - https://www.w3schools.com/js/js_cookies.asp
 - https://stackoverflow.com/questions/44816519/how-to-get-cookie-value-in-expressjs
 - https://stackoverflow.com/questions/3507958/how-can-i-make-an-entire-html-form-readonly
+- https://chat.openai.com/share/13b93fa5-9413-48f6-b482-9081167a6b9e
 */
 
 const express = require("express");

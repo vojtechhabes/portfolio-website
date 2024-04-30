@@ -13,8 +13,22 @@ const {
   authMiddleware,
   passwordMiddleware,
 } = require("../middlewares/authMiddleware");
-const path = require("path");
+const multer = require("multer");
 const sharp = require("sharp");
+const path = require("path");
+
+const upload = multer({
+  limits: {
+    fileSize: 10000000,
+  },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      return cb(new Error("Please upload an image."));
+    }
+
+    cb(undefined, true);
+  },
+});
 
 router.post("/auth/login", async (req, res) => {
   const { username, password } = req.body;
@@ -366,61 +380,62 @@ router.patch("/project/:id", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/project/:id/image", authMiddleware, async (req, res) => {
-  const { id } = req.params;
-  const { image } = req.body;
+// save the image to file system (not the database)
 
-  try {
-    const project = await Project.findById(id);
-    if (!project) {
-      return res.status(404).json({
-        code: "project-not-found",
-        message: "The project with the provided ID was not found.",
-      });
-    }
+router.post(
+  "/project/:id/image",
+  authMiddleware,
+  upload.single("image"),
+  async (req, res) => {
+    const { id } = req.params;
+    const image = req.file;
 
-    // Validate file type based on extension
-    const base64Image = image.split(";base64,").pop();
-    const extension = image.split(";")[0].split("/")[1];
-    if (!["jpg", "jpeg", "png"].includes(extension)) {
+    if (!image) {
       return res.status(400).json({
-        code: "invalid-file-type",
-        message: "Only JPEG or PNG images are allowed.",
+        code: "missing-image",
+        message: "An image is required.",
       });
     }
 
-    // Convert image to WebP and compress
-    const imagePath = path.join(
-      __dirname,
-      "..",
-      "public",
-      "images",
-      "projects",
-      `${id}.webp`
-    );
+    try {
+      const project = await Project.findById(id);
+      if (!project) {
+        return res.status(404).json({
+          code: "project-not-found",
+          message: "The project with the provided ID was not found.",
+        });
+      }
 
-    await sharp(Buffer.from(base64Image, "base64"))
-      .webp({ quality: 80 }) // Adjust quality as needed
-      .toFile(imagePath);
+      const imagePath = path.join(
+        __dirname,
+        "..",
+        "public",
+        "images",
+        "projects",
+        `${id}.webp`
+      );
 
-    return res.status(200).json({
-      code: "image-uploaded",
-      message:
-        "The image has been successfully uploaded and converted to WebP.",
-    });
-  } catch (error) {
-    if (error.name === "CastError") {
-      return res.status(400).json({
-        code: "invalid-id",
-        message: "The provided ID is not a valid project ID.",
+      await sharp(image.buffer).webp({ quality: 80 }).toFile(imagePath);
+
+      return res.status(200).json({
+        code: "image-uploaded",
+        message:
+          "The image has been successfully uploaded and converted to WebP.",
+      });
+    } catch (error) {
+      if (error.name === "CastError") {
+        return res.status(400).json({
+          code: "invalid-id",
+          message: "The provided ID is not a valid project ID.",
+        });
+      }
+      console.error(error);
+      return res.status(500).json({
+        code: "server-error",
+        message: "An error occurred while processing the request.",
       });
     }
-    console.error(error);
-    return res.status(500).json({
-      code: "server-error",
-      message: "An error occurred while processing the request.",
-    });
   }
-});
+);
 
 module.exports = router;

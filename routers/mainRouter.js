@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Project = require("../models/project");
 const showdown = require("showdown");
+const fs = require("fs");
+const path = require("path");
 
 const converter = new showdown.Converter();
 
@@ -45,7 +47,23 @@ router.get("/projects/:id", async (req, res) => {
 
     project.content = converter.makeHtml(project.content);
 
-    return res.render("project", { project });
+    let image;
+    try {
+      const imagePath = path.join(
+        __dirname,
+        "..",
+        "public",
+        "images",
+        "projects",
+        `${id}.webp`
+      );
+      await fs.promises.access(imagePath);
+      image = path.join("/images", "projects", `${id}.webp`);
+    } catch {
+      image = null;
+    }
+
+    return res.render("project", { project, image });
   } catch (error) {
     if (error.name === "CastError") {
       return res.status(404).render("notFound");

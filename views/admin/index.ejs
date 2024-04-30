@@ -88,6 +88,14 @@
           <button id="starButton" class="icon-only" disabled>
             <i class="material-symbols-rounded">star</i>
           </button>
+
+          <!--Upload image-->
+          <form id="uploadImage" enctype="multipart/form-data">
+            <input type="file" id="image" name="image" />
+            <button type="submit" class="icon-only">
+              <i class="material-symbols-rounded">add_a_photo</i>
+            </button>
+          </form>
         </section>
       </section>
     </main>
@@ -105,6 +113,7 @@
       const fieldsets = project.querySelectorAll(".project fieldset");
       const publishButton = project.querySelector("#publishButton");
       const starButton = project.querySelector("#starButton");
+      const uploadImage = project.querySelector("#uploadImage");
 
       let projectsArray = [];
       let currentProjectIndex = null;
@@ -459,6 +468,37 @@
         updateCurrentProject({
           starred: projectsArray[currentProjectIndex].starred ? false : true,
         });
+      });
+
+      uploadImage.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        // encode to base64 and send to server in JSON
+        const image = uploadImage.querySelector("#image").files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(image);
+
+        reader.onload = async () => {
+          const response = await fetch(
+            `/api/project/${projectsArray[currentProjectIndex]._id}/image`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ image: reader.result }),
+            }
+          );
+          const data = await response.json();
+          console.log(data);
+
+          if (!response.ok) {
+            createNotification("Nastala chyba při nahrávání obrázku", "error");
+            return;
+          }
+
+          createNotification("Obrázek byl úspěšně nahrán", "success");
+        };
       });
     </script>
   </body>

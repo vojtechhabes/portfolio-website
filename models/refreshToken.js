@@ -15,6 +15,10 @@ const refreshTokenSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    fromIp: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

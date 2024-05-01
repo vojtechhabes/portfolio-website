@@ -5,6 +5,7 @@ const {
   refreshBothTokens,
 } = require("../utils/tokenManagement");
 const jwt = require("jsonwebtoken");
+const geoip = require("geoip-lite");
 
 const passwordMiddleware = async (req, res, next) => {
   const { password } = req.body;
@@ -55,7 +56,9 @@ const authMiddleware = async (req, res, next) => {
       message: "The provided access token is invalid.",
     });
   } else if (refreshToken) {
-    const newTokens = await refreshBothTokens(refreshToken);
+    const ip = req.clientIp;
+
+    const newTokens = await refreshBothTokens(refreshToken, ip);
 
     if (newTokens) {
       res.cookie("accessToken", newTokens.accessToken, {

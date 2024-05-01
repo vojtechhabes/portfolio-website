@@ -8,7 +8,7 @@ const generateAccessToken = (userId) => {
   });
 };
 
-const generateRefreshToken = async (userId) => {
+const generateRefreshToken = async (userId, fromIp) => {
   const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: "7d",
   });
@@ -16,6 +16,7 @@ const generateRefreshToken = async (userId) => {
   const newRefreshToken = new RefreshToken({
     token: refreshToken,
     userId,
+    fromIp,
   });
   await newRefreshToken.save();
 
@@ -51,7 +52,7 @@ const validateRefreshToken = async (refreshToken) => {
   }
 };
 
-const refreshBothTokens = async (refreshToken) => {
+const refreshBothTokens = async (refreshToken, fromIp) => {
   const token = await validateRefreshToken(refreshToken);
   if (!token) {
     return null;
@@ -60,7 +61,7 @@ const refreshBothTokens = async (refreshToken) => {
   await RefreshToken.deleteOne({ token: refreshToken });
 
   const accessToken = generateAccessToken(token.userId);
-  const newRefreshToken = await generateRefreshToken(token.userId);
+  const newRefreshToken = await generateRefreshToken(token.userId, fromIp);
 
   return { accessToken, refreshToken: newRefreshToken };
 };

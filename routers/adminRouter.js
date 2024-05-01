@@ -6,6 +6,7 @@ const {
   validateRefreshToken,
   refreshBothTokens,
 } = require("../utils/tokenManagement");
+const geoip = require("geoip-lite");
 
 router.get("/login", async (req, res) => {
   const { accessToken, refreshToken } = req.cookies;
@@ -20,7 +21,9 @@ router.get("/login", async (req, res) => {
   if (refreshToken) {
     const token = await validateRefreshToken(refreshToken);
     if (token) {
-      const tokens = await refreshBothTokens(refreshToken);
+      const ip = req.clientIp;
+
+      const tokens = await refreshBothTokens(refreshToken, ip);
       if (tokens) {
         res.cookie("accessToken", tokens.accessToken, {
           httpOnly: true,

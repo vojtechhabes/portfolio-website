@@ -8,6 +8,7 @@ Zdroje:
 - https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding
 - https://stackoverflow.com/questions/572768/styling-an-input-type-file-button/37183065
 - https://chat.openai.com/share/03e90f2c-fdea-494a-82c5-bd3a091fae69
+- https://stackoverflow.com/questions/49173287/finding-location-through-ip-address-nodejs-mongodb
 */
 
 const express = require("express");

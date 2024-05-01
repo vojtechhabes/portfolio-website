@@ -17,6 +17,7 @@ const multer = require("multer");
 const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
+const geoip = require("geoip-lite");
 
 const upload = multer({
   limits: {
@@ -76,8 +77,10 @@ router.post("/auth/login", async (req, res) => {
       }
     }
 
+    const ip = req.clientIp;
+
     const accessToken = generateAccessToken(user._id);
-    const refreshToken = await generateRefreshToken(user._id);
+    const refreshToken = await generateRefreshToken(user._id, ip);
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,

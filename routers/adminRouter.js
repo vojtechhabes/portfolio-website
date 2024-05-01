@@ -6,7 +6,6 @@ const {
   validateRefreshToken,
   refreshBothTokens,
 } = require("../utils/tokenManagement");
-const geoip = require("geoip-lite");
 
 router.get("/login", async (req, res) => {
   const { accessToken, refreshToken } = req.cookies;

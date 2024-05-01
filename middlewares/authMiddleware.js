@@ -5,7 +5,6 @@ const {
   refreshBothTokens,
 } = require("../utils/tokenManagement");
 const jwt = require("jsonwebtoken");
-const geoip = require("geoip-lite");
 
 const passwordMiddleware = async (req, res, next) => {
   const { password } = req.body;

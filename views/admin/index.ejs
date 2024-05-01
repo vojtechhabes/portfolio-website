@@ -270,7 +270,7 @@
         const data = await response.json();
 
         if (!response.ok) {
-          alert("Nastala chyba při načítání projektů");
+          createNotification("Nastala chyba při načítání projektů", "error");
           return;
         }
 

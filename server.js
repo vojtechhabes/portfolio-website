@@ -14,6 +14,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const { rateLimit } = require("express-rate-limit");
+const requestIp = require("request-ip");
 require("dotenv").config();
 
 const corsOptions = {
@@ -23,10 +25,22 @@ const corsOptions = {
 
 const app = express();
 
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 50,
+  message: {
+    code: "rate-limit-exceeded",
+    message: "Too many requests from this IP, please try again later.",
+  },
+  keyGenerator: (req) => req.clientIp,
+});
+
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(cors(corsOptions));
+app.use(requestIp.mw());
 app.use(cookieParser());
+app.use("/api", limiter);
 app.use("/api", express.json());
 app.use("/api", (error, req, res, next) => {
   if (error instanceof SyntaxError) {

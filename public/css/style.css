@@ -10,6 +10,8 @@
 
 html {
   font-size: min(1.8vw, 20px);
+  scroll-behavior: smooth;
+  scroll-padding-top: 8rem;
 }
 
 body {

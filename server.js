@@ -5,6 +5,9 @@ Zdroje:
 - https://stackoverflow.com/questions/44816519/how-to-get-cookie-value-in-expressjs
 - https://stackoverflow.com/questions/3507958/how-can-i-make-an-entire-html-form-readonly
 - https://chat.openai.com/share/13b93fa5-9413-48f6-b482-9081167a6b9e
+- https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding
+- https://stackoverflow.com/questions/572768/styling-an-input-type-file-button/37183065
+- https://chat.openai.com/share/03e90f2c-fdea-494a-82c5-bd3a091fae69
 */
 
 const express = require("express");

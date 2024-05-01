@@ -16,6 +16,7 @@ const {
 const multer = require("multer");
 const sharp = require("sharp");
 const path = require("path");
+const fs = require("fs");
 
 const upload = multer({
   limits: {
@@ -238,6 +239,21 @@ router.delete(
       }
 
       await Project.deleteOne({ _id: id });
+
+      const imagePath = path.join(
+        __dirname,
+        "..",
+        "public",
+        "images",
+        "projects",
+        `${id}.webp`
+      );
+
+      try {
+        await fs.promises.unlink(imagePath);
+      } catch {
+        // Do nothing - the image doesn't exist
+      }
 
       return res.status(200).json({
         code: "project-deleted",

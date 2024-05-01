@@ -60,7 +60,7 @@ router.get("/projects/:id", async (req, res) => {
       await fs.promises.access(imagePath);
       image = path.join("/images", "projects", `${id}.webp`);
     } catch {
-      image = null;
+      image = "/images/me2.webp";
     }
 
     return res.render("project", { project, image });

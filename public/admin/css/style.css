@@ -22,6 +22,10 @@ body {
   font-size: 1.5rem;
 }
 
+#uploadImageInput {
+  display: none;
+}
+
 .notifications {
   position: fixed;
   top: 1.5rem;
@@ -142,7 +146,8 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto 1fr;
-  gap: 1.5rem;
+  row-gap: 0.5rem;
+  column-gap: 1.5rem;
   height: 100%;
 }
 
@@ -185,7 +190,7 @@ body {
 
 form textarea {
   font-family: "DM Sans", sans-serif;
-  padding: 0.5rem;
+  padding: 0.8rem;
   box-sizing: border-box;
   background-color: #ffffff;
   border: none;

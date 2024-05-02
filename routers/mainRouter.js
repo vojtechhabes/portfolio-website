@@ -9,7 +9,9 @@ const converter = new showdown.Converter();
 
 router.get("/", async (req, res) => {
   try {
-    const allProjects = await Project.find({ published: true });
+    const allProjects = await Project.find({ published: true }).sort({
+      createdAt: "desc",
+    });
     const starredProjects = allProjects.filter((project) => project.starred);
 
     return res.render("index", {
@@ -28,7 +30,9 @@ router.get("/about", (req, res) => {
 
 router.get("/projects", async (req, res) => {
   try {
-    const projects = await Project.find({ published: true });
+    const projects = await Project.find({ published: true }).sort({
+      createdAt: "desc",
+    });
     return res.render("projects", { projects });
   } catch (error) {
     console.error(error);

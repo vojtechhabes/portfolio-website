@@ -56,13 +56,16 @@
             <% } else { %>
             <p>Žádné významné projekty nebyly nalezeny.</p>
             <% } %> <% if (remainingProjectsCount > 0) { %>
-            <a href="/projects" class="text-dim"
-              >+<%=remainingProjectsCount%> dalších</a
-            >
+            <a href="/projects#list" class="text-dim">
+              +<%=remainingProjectsCount%> <%=remainingProjectsCount > 4 ?
+              "dalších" : "další"%>
+            </a>
             <% } %>
           </section>
           <section class="action">
-            <a href="/projects" class="button big primary">Všechny projekty</a>
+            <a href="/projects#list" class="button big primary"
+              >Všechny projekty</a
+            >
           </section>
         </div>
       </article>

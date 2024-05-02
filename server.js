@@ -9,6 +9,7 @@ Zdroje:
 - https://stackoverflow.com/questions/572768/styling-an-input-type-file-button/37183065
 - https://chat.openai.com/share/03e90f2c-fdea-494a-82c5-bd3a091fae69
 - https://stackoverflow.com/questions/49173287/finding-location-through-ip-address-nodejs-mongodb
+- https://stackoverflow.com/questions/22252472/how-can-i-change-the-color-of-an-svg-element
 */
 
 const express = require("express");

@@ -101,6 +101,26 @@ article.secondary .skills article > img {
   color: var(--on-background-color);
 }
 
+.navigation-header .social-media {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navigation-header .social-media > a {
+  color: var(--on-background-color);
+}
+
+.navigation-header .social-media > a > img {
+  width: 1.5rem;
+  height: 1.5rem;
+  filter: invert(1);
+}
+
+.navigation-header .social-media > a > img:hover {
+  filter: invert(97%) sepia(92%) saturate(956%) hue-rotate(12deg)
+    brightness(88%) contrast(86%);
+}
+
 /* Posts */
 
 body > main > article.post {
@@ -620,6 +640,7 @@ button {
     width: 100%;
     background-color: var(--background-color);
     flex-direction: column;
+    gap: 4rem;
     justify-content: flex-start;
     align-items: flex-start;
     border: none;
@@ -641,8 +662,14 @@ button {
     font-size: 2.4rem;
   }
 
-  .navigation-header.open nav > ul {
+  .navigation-header.open nav,
+  .navigation-header.open .social-media {
     animation: fadeIn 0.8s;
+  }
+
+  .navigation-header .social-media > a > img {
+    width: 2rem;
+    height: 2rem;
   }
 
   .menu-button {

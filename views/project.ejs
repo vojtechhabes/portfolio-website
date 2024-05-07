@@ -13,7 +13,9 @@
         </section>
         <section class="text">
           <h1><%=project.title%></h1>
-          <p class="title-description"><%=project.description%></p>
+          <p class="title-description">
+            <%=project.description || "Úchvatný projekt."%>
+          </p>
         </section>
       </article>
 
@@ -26,7 +28,7 @@
               </li>
               <li>
                 <p>
-                  publikováno <%= new
+                  vytvořeno <%= new
                   Date(project.createdAt).toISOString().split("T")[0] %>
                 </p>
               </li>

@@ -10,6 +10,7 @@ Zdroje:
 - https://chat.openai.com/share/03e90f2c-fdea-494a-82c5-bd3a091fae69
 - https://stackoverflow.com/questions/49173287/finding-location-through-ip-address-nodejs-mongodb
 - https://stackoverflow.com/questions/22252472/how-can-i-change-the-color-of-an-svg-element
+- https://stackoverflow.com/questions/115983/how-do-i-add-an-empty-directory-to-a-git-repository
 */
 
 const express = require("express");

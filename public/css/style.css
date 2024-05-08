@@ -188,6 +188,10 @@ body > main > article.post ol > li {
   line-height: 1.2;
 }
 
+body > main > article.post strong {
+  font-weight: 500;
+}
+
 /* Layout */
 
 .title-section {

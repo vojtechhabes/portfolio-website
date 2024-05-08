@@ -144,7 +144,7 @@ body > main > article.post > div h3 {
   margin-top: 1rem;
 }
 
-body > main > article.post > div p:first-child {
+body > main > article.post > div > p:first-child {
   /* perex */
   font-size: 1.6rem;
   font-weight: 300;

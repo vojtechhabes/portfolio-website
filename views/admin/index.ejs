@@ -169,37 +169,47 @@
                 return;
               }
 
-              const response = await fetch(
-                `/api/project/${projectsArray[index]._id}`,
-                {
-                  method: "DELETE",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({ password }),
-                }
-              );
-              const data = await response.json();
+              try {
+                const response = await fetch(
+                  `/api/project/${projectsArray[index]._id}`,
+                  {
+                    method: "DELETE",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ password }),
+                  }
+                );
+                const data = await response.json();
 
-              if (!response.ok) {
-                switch (data.code) {
-                  case "incorrect-password":
-                    createNotification("Zadali jste nesprávné heslo", "error");
-                    break;
-                  case "server-error":
-                    createNotification("Nastala chyba na serveru", "error");
-                    break;
-                  default:
-                    createNotification("Nastala neznámá chyba", "error");
-                    break;
+                if (!response.ok) {
+                  switch (data.code) {
+                    case "incorrect-password":
+                      createNotification(
+                        "Zadali jste nesprávné heslo",
+                        "error"
+                      );
+                      break;
+                    case "server-error":
+                      createNotification("Nastala chyba na serveru", "error");
+                      break;
+                    default:
+                      createNotification("Nastala neznámá chyba", "error");
+                      break;
+                  }
+                  return;
                 }
-                return;
+
+                createNotification("Projekt byl úspěšně smazán", "success");
+                projectsArray.splice(index, 1);
+                setProjects(projectsArray);
+                changeCurrentProject(null);
+              } catch (error) {
+                createNotification(
+                  "Nastala chyba při mazání projektu",
+                  "error"
+                );
               }
-
-              createNotification("Projekt byl úspěšně smazán", "success");
-              projectsArray.splice(index, 1);
-              setProjects(projectsArray);
-              changeCurrentProject(null);
             }
           );
         });
@@ -266,15 +276,19 @@
       };
 
       const loadProjects = async () => {
-        const response = await fetch("/api/project");
-        const data = await response.json();
+        try {
+          const response = await fetch("/api/project");
+          const data = await response.json();
 
-        if (!response.ok) {
+          if (!response.ok) {
+            createNotification("Nastala chyba při načítání projektů", "error");
+            return;
+          }
+
+          setProjects(data.projects);
+        } catch (error) {
           createNotification("Nastala chyba při načítání projektů", "error");
-          return;
         }
-
-        setProjects(data.projects);
       };
 
       loadProjects();
@@ -284,23 +298,32 @@
 
         const title = addProjectForm.querySelector("#title").value;
 
-        const response = await fetch("/api/project", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ title }),
-        });
-        const data = await response.json();
-
-        if (!response.ok) {
-          createNotification("Nastala chyba při vytváření projektu", "error");
+        if (!title) {
+          createNotification("Název projektu nesmí být prázdný", "error");
           return;
         }
 
-        createNotification("Projekt byl úspěšně vytvořen", "success");
-        pushProject(data.project);
-        addProjectForm.querySelector("#title").value = "";
+        try {
+          const response = await fetch("/api/project", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ title }),
+          });
+          const data = await response.json();
+
+          if (!response.ok) {
+            createNotification("Nastala chyba při vytváření projektu", "error");
+            return;
+          }
+
+          createNotification("Projekt byl úspěšně vytvořen", "success");
+          pushProject(data.project);
+          addProjectForm.querySelector("#title").value = "";
+        } catch (error) {
+          createNotification("Nastala chyba při vytváření projektu", "error");
+        }
       });
 
       changeTitleForm.addEventListener("submit", async (event) => {
@@ -308,25 +331,32 @@
 
         const title = changeTitleForm.querySelector("#title").value;
 
-        const response = await fetch(
-          `/api/project/${projectsArray[currentProjectIndex]._id}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ title }),
+        try {
+          const response = await fetch(
+            `/api/project/${projectsArray[currentProjectIndex]._id}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ title }),
+            }
+          );
+          const data = await response.json();
+
+          if (!response.ok) {
+            createNotification(
+              "Nastala chyba při změně názvu projektu",
+              "error"
+            );
+            return;
           }
-        );
-        const data = await response.json();
 
-        if (!response.ok) {
+          createNotification("Název projektu byl uložen", "success");
+          updateCurrentProject({ title });
+        } catch (error) {
           createNotification("Nastala chyba při změně názvu projektu", "error");
-          return;
         }
-
-        createNotification("Název projektu byl uložen", "success");
-        updateCurrentProject({ title });
       });
 
       changeDescriptionForm.addEventListener("submit", async (event) => {
@@ -335,28 +365,35 @@
         const description =
           changeDescriptionForm.querySelector("#description").value;
 
-        const response = await fetch(
-          `/api/project/${projectsArray[currentProjectIndex]._id}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ description }),
-          }
-        );
-        const data = await response.json();
+        try {
+          const response = await fetch(
+            `/api/project/${projectsArray[currentProjectIndex]._id}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ description }),
+            }
+          );
+          const data = await response.json();
 
-        if (!response.ok) {
+          if (!response.ok) {
+            createNotification(
+              "Nastala chyba při změně popisu projektu",
+              "error"
+            );
+            return;
+          }
+
+          createNotification("Popis projektu byl uložen", "success");
+          updateCurrentProject({ description });
+        } catch (error) {
           createNotification(
             "Nastala chyba při změně popisu projektu",
             "error"
           );
-          return;
         }
-
-        createNotification("Popis projektu byl uložen", "success");
-        updateCurrentProject({ description });
       });
 
       changeContentForm.addEventListener("submit", async (event) => {
@@ -364,110 +401,131 @@
 
         const content = changeContentForm.querySelector("#content").value;
 
-        const response = await fetch(
-          `/api/project/${projectsArray[currentProjectIndex]._id}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ content }),
-          }
-        );
-        const data = await response.json();
+        try {
+          const response = await fetch(
+            `/api/project/${projectsArray[currentProjectIndex]._id}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ content }),
+            }
+          );
+          const data = await response.json();
 
-        if (!response.ok) {
+          if (!response.ok) {
+            createNotification(
+              "Nastala chyba při změně obsahu projektu",
+              "error"
+            );
+            return;
+          }
+
+          createNotification("Obsah projektu byl uložen", "success");
+          updateCurrentProject({ content });
+        } catch (error) {
           createNotification(
             "Nastala chyba při změně obsahu projektu",
             "error"
           );
-          return;
         }
-
-        createNotification("Obsah projektu byl uložen", "success");
-        updateCurrentProject({ content });
       });
 
       publishButton.addEventListener("click", async () => {
-        const response = await fetch(
-          `/api/project/${projectsArray[currentProjectIndex]._id}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              published: projectsArray[currentProjectIndex].published
-                ? false
-                : true,
-            }),
-          }
-        );
-        const data = await response.json();
+        try {
+          const response = await fetch(
+            `/api/project/${projectsArray[currentProjectIndex]._id}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                published: projectsArray[currentProjectIndex].published
+                  ? false
+                  : true,
+              }),
+            }
+          );
+          const data = await response.json();
 
-        if (!response.ok) {
+          if (!response.ok) {
+            createNotification(
+              "Nastala chyba při změně zveřejnění projektu",
+              "error"
+            );
+            return;
+          }
+
+          createNotification(
+            projectsArray[currentProjectIndex].published
+              ? "Projekt byl úspěšně skryt"
+              : "Projekt byl úspěšně zveřejněn",
+            "success"
+          );
+          publishButton.innerHTML = projectsArray[currentProjectIndex].published
+            ? '<i class="material-symbols-rounded">visibility</i>Zveřejnit'
+            : '<i class="material-symbols-rounded">visibility_off</i>Skrýt';
+          updateCurrentProject({
+            published: projectsArray[currentProjectIndex].published
+              ? false
+              : true,
+          });
+        } catch (error) {
           createNotification(
             "Nastala chyba při změně zveřejnění projektu",
             "error"
           );
-          return;
         }
-
-        createNotification(
-          projectsArray[currentProjectIndex].published
-            ? "Projekt byl úspěšně skryt"
-            : "Projekt byl úspěšně zveřejněn",
-          "success"
-        );
-        publishButton.innerHTML = projectsArray[currentProjectIndex].published
-          ? '<i class="material-symbols-rounded">visibility</i>Zveřejnit'
-          : '<i class="material-symbols-rounded">visibility_off</i>Skrýt';
-        updateCurrentProject({
-          published: projectsArray[currentProjectIndex].published
-            ? false
-            : true,
-        });
       });
 
       starButton.addEventListener("click", async () => {
-        const response = await fetch(
-          `/api/project/${projectsArray[currentProjectIndex]._id}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              starred: projectsArray[currentProjectIndex].starred
-                ? false
-                : true,
-            }),
-          }
-        );
-        const data = await response.json();
+        try {
+          const response = await fetch(
+            `/api/project/${projectsArray[currentProjectIndex]._id}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                starred: projectsArray[currentProjectIndex].starred
+                  ? false
+                  : true,
+              }),
+            }
+          );
+          const data = await response.json();
 
-        if (!response.ok) {
+          if (!response.ok) {
+            createNotification(
+              "Nastala chyba při změně hvězdičky projektu",
+              "error"
+            );
+            return;
+          }
+
+          createNotification(
+            projectsArray[currentProjectIndex].starred
+              ? "Projekt byl odebrán z označených"
+              : "Projekt byl označen",
+            "success"
+          );
+
+          starButton.innerHTML = projectsArray[currentProjectIndex].starred
+            ? '<i class="material-symbols-rounded">star</i>'
+            : '<i class="material-symbols-rounded filled">star</i>';
+
+          updateCurrentProject({
+            starred: projectsArray[currentProjectIndex].starred ? false : true,
+          });
+        } catch (error) {
           createNotification(
             "Nastala chyba při změně hvězdičky projektu",
             "error"
           );
-          return;
         }
-
-        createNotification(
-          projectsArray[currentProjectIndex].starred
-            ? "Projekt byl odebrán z označených"
-            : "Projekt byl označen",
-          "success"
-        );
-
-        starButton.innerHTML = projectsArray[currentProjectIndex].starred
-          ? '<i class="material-symbols-rounded">star</i>'
-          : '<i class="material-symbols-rounded filled">star</i>';
-
-        updateCurrentProject({
-          starred: projectsArray[currentProjectIndex].starred ? false : true,
-        });
       });
 
       uploadImageInput.addEventListener("change", async (event) => {
@@ -475,21 +533,25 @@
         formData.append("image", event.target.files[0]);
         event.target.value = "";
 
-        const response = await fetch(
-          `/api/project/${projectsArray[currentProjectIndex]._id}/image`,
-          {
-            method: "POST",
-            body: formData,
+        try {
+          const response = await fetch(
+            `/api/project/${projectsArray[currentProjectIndex]._id}/image`,
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+          const data = await response.json();
+
+          if (!response.ok) {
+            createNotification("Nastala chyba při nahrávání obrázku", "error");
+            return;
           }
-        );
-        const data = await response.json();
 
-        if (!response.ok) {
+          createNotification("Obrázek byl úspěšně nahrán", "success");
+        } catch (error) {
           createNotification("Nastala chyba při nahrávání obrázku", "error");
-          return;
         }
-
-        createNotification("Obrázek byl úspěšně nahrán", "success");
       });
 
       uploadImageButton.addEventListener("click", () => {

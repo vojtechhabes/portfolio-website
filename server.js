@@ -11,6 +11,7 @@ Zdroje:
 - https://stackoverflow.com/questions/49173287/finding-location-through-ip-address-nodejs-mongodb
 - https://stackoverflow.com/questions/22252472/how-can-i-change-the-color-of-an-svg-element
 - https://stackoverflow.com/questions/115983/how-do-i-add-an-empty-directory-to-a-git-repository
+- https://chat.openai.com/share/0f1df4c3-0295-47d9-9aec-b1e46739d37d
 */
 
 const express = require("express");

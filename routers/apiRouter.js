@@ -398,8 +398,6 @@ router.patch("/project/:id", authMiddleware, async (req, res) => {
   }
 });
 
-// save the image to file system (not the database)
-
 router.post(
   "/project/:id/image",
   authMiddleware,
@@ -433,7 +431,7 @@ router.post(
         `${id}.webp`
       );
 
-      await sharp(image.buffer).webp({ quality: 80 }).toFile(imagePath);
+      await sharp(image.buffer).webp({ quality: 60 }).toFile(imagePath);
 
       return res.status(200).json({
         code: "image-uploaded",

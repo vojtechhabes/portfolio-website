@@ -91,6 +91,7 @@ body {
   gap: 1.5rem;
   max-width: 600px;
   width: 100%;
+  padding: 1.5rem;
 }
 
 .box > section {

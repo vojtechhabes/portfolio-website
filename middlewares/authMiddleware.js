@@ -50,6 +50,9 @@ const authMiddleware = async (req, res, next) => {
       return next();
     }
 
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+
     return res.status(403).json({
       code: "invalid-token",
       message: "The provided access token is invalid.",
@@ -90,6 +93,9 @@ const authMiddleware = async (req, res, next) => {
         });
       }
     }
+
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
 
     return res.status(403).json({
       code: "invalid-token",

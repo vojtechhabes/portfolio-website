@@ -7,6 +7,11 @@ const path = require("path");
 
 const converter = new showdown.Converter();
 
+router.use((req, res, next) => {
+  res.locals.url = req.protocol + "://" + req.get("host") + req.originalUrl;
+  next();
+});
+
 router.get("/", async (req, res) => {
   try {
     const allProjects = await Project.find({ published: true }).sort({

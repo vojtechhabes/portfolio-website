@@ -55,7 +55,7 @@ const authMiddleware = async (req, res, next) => {
 
     return res.redirect("/admin/login");
   } else if (refreshToken) {
-    const ip = req.socket.remoteAddress;
+    const ip = req.clientIp;
 
     const newTokens = await refreshBothTokens(refreshToken, ip);
 

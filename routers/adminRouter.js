@@ -20,7 +20,7 @@ router.get("/login", async (req, res) => {
   if (refreshToken) {
     const token = await validateRefreshToken(refreshToken);
     if (token) {
-      const ip = req.socket.remoteAddress;
+      const ip = req.clientIp;
 
       const tokens = await refreshBothTokens(refreshToken, ip);
       if (tokens) {

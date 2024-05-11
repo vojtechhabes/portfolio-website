@@ -45,6 +45,7 @@ const corsOptions = {
 
 const app = express();
 
+/*
 const limiter = rateLimit({
   windowMs: 10 * 60 * 1000,
   max: 50,
@@ -56,13 +57,14 @@ const limiter = rateLimit({
     return req.clientIp;
   },
 });
+*/
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(requestIp.mw());
 app.use(cookieParser());
 app.use("/api", cors(corsOptions));
-app.use("/api", limiter);
+// app.use("/api", limiter);
 app.use("/api", express.json());
 app.use("/api", (error, req, res, next) => {
   if (error instanceof SyntaxError) {

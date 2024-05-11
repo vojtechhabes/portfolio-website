@@ -22,6 +22,7 @@ router.get("/", async (req, res) => {
     return res.render("index", {
       starredProjects,
       remainingProjectsCount: allProjects.length - starredProjects.length,
+      contactFormUrl: process.env.CONTACT_FORM_URL,
     });
   } catch (error) {
     console.error(error);

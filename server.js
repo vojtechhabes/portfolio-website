@@ -14,6 +14,8 @@ Zdroje:
 - https://stackoverflow.com/questions/115983/how-do-i-add-an-empty-directory-to-a-git-repository
 - https://chat.openai.com/share/0f1df4c3-0295-47d9-9aec-b1e46739d37d
 - https://stackoverflow.com/questions/57955612/can-we-use-webp-extension-image-in-ogimage-meta-tag
+- https://ogp.me
+- https://chat.openai.com/share/b44fc6dd-3794-4367-a60a-e147f1424f7f
 */
 
 const express = require("express");

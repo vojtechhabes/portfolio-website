@@ -76,7 +76,7 @@ router.post("/auth/login", async (req, res) => {
       }
     }
 
-    const ip = req.clientIp;
+    const ip = req.socket.remoteAddress;
 
     const accessToken = generateAccessToken(user._id);
     const refreshToken = await generateRefreshToken(user._id, ip);

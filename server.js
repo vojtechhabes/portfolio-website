@@ -52,7 +52,9 @@ const limiter = rateLimit({
     code: "rate-limit-exceeded",
     message: "Too many requests from this IP, please try again later.",
   },
-  keyGenerator: (req) => req.clientIp,
+  keyGenerator: (req) => {
+    return req.clientIp;
+  },
 });
 
 app.set("view engine", "ejs");

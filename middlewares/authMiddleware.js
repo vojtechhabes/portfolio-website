@@ -53,12 +53,9 @@ const authMiddleware = async (req, res, next) => {
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
 
-    return res.status(403).json({
-      code: "invalid-token",
-      message: "The provided access token is invalid.",
-    });
+    return res.redirect("/admin/login");
   } else if (refreshToken) {
-    const ip = req.clientIp;
+    const ip = req.socket.remoteAddress;
 
     const newTokens = await refreshBothTokens(refreshToken, ip);
 
@@ -97,10 +94,7 @@ const authMiddleware = async (req, res, next) => {
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
 
-    return res.status(403).json({
-      code: "invalid-token",
-      message: "The provided refresh token is invalid.",
-    });
+    return res.redirect("/admin/login");
   }
 
   return res.redirect("/admin/login");

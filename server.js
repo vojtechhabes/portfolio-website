@@ -1,5 +1,6 @@
 /*
 Zdroje:
+- dokumentace všech použitých knihoven
 - https://expressjs.com/en/resources/middleware/cors.html
 - https://www.w3schools.com/js/js_cookies.asp
 - https://stackoverflow.com/questions/44816519/how-to-get-cookie-value-in-expressjs
@@ -12,6 +13,7 @@ Zdroje:
 - https://stackoverflow.com/questions/22252472/how-can-i-change-the-color-of-an-svg-element
 - https://stackoverflow.com/questions/115983/how-do-i-add-an-empty-directory-to-a-git-repository
 - https://chat.openai.com/share/0f1df4c3-0295-47d9-9aec-b1e46739d37d
+- https://stackoverflow.com/questions/57955612/can-we-use-webp-extension-image-in-ogimage-meta-tag
 */
 
 const express = require("express");
@@ -22,9 +24,21 @@ const { rateLimit } = require("express-rate-limit");
 const requestIp = require("request-ip");
 require("dotenv").config();
 
+const whitelist = process.env.CORS_WHITELIST.split(",");
 const corsOptions = {
-  origin: `http://localhost:${process.env.PORT || 3000}`,
-  optionsSuccessStatus: 200,
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(
+        {
+          code: "cors-not-allowed",
+          message: "This origin is not allowed to access the API.",
+        },
+        false
+      );
+    }
+  },
 };
 
 const app = express();
@@ -41,9 +55,9 @@ const limiter = rateLimit({
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
-app.use(cors(corsOptions));
 app.use(requestIp.mw());
 app.use(cookieParser());
+app.use("/api", cors(corsOptions));
 app.use("/api", limiter);
 app.use("/api", express.json());
 app.use("/api", (error, req, res, next) => {
@@ -52,6 +66,8 @@ app.use("/api", (error, req, res, next) => {
       code: "invalid-request",
       message: "The provided request was not a valid JSON.",
     });
+  } else if (error.code === "cors-not-allowed") {
+    res.status(403).json(error);
   } else {
     next();
   }
@@ -73,6 +89,7 @@ app.use((req, res) => {
 const startServer = async () => {
   let noDb = false;
   try {
+    console.log(`Connecting to database...`);
     await mongoose.connect(process.env.DB_URI);
     const db = mongoose.connection;
     console.log(`Connected to database ${db.db.databaseName}.`);
@@ -82,6 +99,7 @@ const startServer = async () => {
   }
 
   try {
+    console.log("Starting server...");
     await app.listen(process.env.PORT || 3000);
     console.log(`Server is running on port ${process.env.PORT}.`);
     if (noDb) {

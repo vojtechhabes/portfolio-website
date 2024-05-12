@@ -1,25 +1,3 @@
-/*
-Zdroje:
-- dokumentace všech použitých knihoven
-- https://expressjs.com/en/resources/middleware/cors.html
-- https://www.w3schools.com/js/js_cookies.asp
-- https://stackoverflow.com/questions/44816519/how-to-get-cookie-value-in-expressjs
-- https://stackoverflow.com/questions/3507958/how-can-i-make-an-entire-html-form-readonly
-- https://chat.openai.com/share/13b93fa5-9413-48f6-b482-9081167a6b9e
-- https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding
-- https://stackoverflow.com/questions/572768/styling-an-input-type-file-button/37183065
-- https://chat.openai.com/share/03e90f2c-fdea-494a-82c5-bd3a091fae69
-- https://stackoverflow.com/questions/49173287/finding-location-through-ip-address-nodejs-mongodb
-- https://stackoverflow.com/questions/22252472/how-can-i-change-the-color-of-an-svg-element
-- https://stackoverflow.com/questions/115983/how-do-i-add-an-empty-directory-to-a-git-repository
-- https://chat.openai.com/share/0f1df4c3-0295-47d9-9aec-b1e46739d37d
-- https://stackoverflow.com/questions/57955612/can-we-use-webp-extension-image-in-ogimage-meta-tag
-- https://ogp.me
-- https://chat.openai.com/share/b44fc6dd-3794-4367-a60a-e147f1424f7f
-- https://stackoverflow.com/questions/48956465/favicon-standard-2024-svg-ico-png-and-dimensions
-- https://realfavicongenerator.net
-*/
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");

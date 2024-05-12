@@ -16,6 +16,8 @@ Zdroje:
 - https://stackoverflow.com/questions/57955612/can-we-use-webp-extension-image-in-ogimage-meta-tag
 - https://ogp.me
 - https://chat.openai.com/share/b44fc6dd-3794-4367-a60a-e147f1424f7f
+- https://stackoverflow.com/questions/48956465/favicon-standard-2024-svg-ico-png-and-dimensions
+- https://realfavicongenerator.net
 */
 
 const express = require("express");

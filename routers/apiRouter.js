@@ -22,12 +22,16 @@ const upload = multer({
   limits: {
     fileSize: 10000000,
   },
-  fileFilter(req, file, cb) {
-    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-      return cb(new Error("Please upload an image."));
+  fileFilter(req, file, callback) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|webp)$/)) {
+      return callback(
+        new Error(
+          "Only JPG, JPEG, PNG, and WebP files are allowed for project images."
+        )
+      );
     }
 
-    cb(undefined, true);
+    callback(null, true);
   },
 });
 

@@ -1,11 +1,10 @@
 /* Global */
-
 :root {
-  --primary-color: #b5d438;
-  --background-color: #0a0a0a;
-  --on-background-color: #ffffff;
-  --on-background-color-dim: #ffffff80;
-  --background-color-dim: #0a0a0a80;
+  --primary-color: #6f942e;
+  --background-color: #fff7d8;
+  --on-background-color: #193209;
+  --on-background-color-dim: #19320980;
+  --background-color-dim: #fff9e180;
 }
 
 html {
@@ -48,10 +47,6 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-article.secondary .skills article > img {
-  filter: invert(1);
 }
 
 /* Navigation */
@@ -113,12 +108,11 @@ article.secondary .skills article > img {
 .navigation-header .social-media > a > img {
   width: 1.5rem;
   height: 1.5rem;
-  filter: invert(1);
 }
 
 .navigation-header .social-media > a > img:hover {
-  filter: invert(97%) sepia(92%) saturate(956%) hue-rotate(12deg)
-    brightness(88%) contrast(86%);
+  filter: invert(45%) sepia(5%) saturate(5611%) hue-rotate(40deg)
+    brightness(116%) contrast(73%);
 }
 
 /* Posts */

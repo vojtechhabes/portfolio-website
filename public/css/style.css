@@ -512,6 +512,7 @@ form input::placeholder {
 
 article.primary form input {
   border-bottom: 0.1rem solid var(--background-color-dim);
+  color: var(--background-color);
 }
 
 article.primary form input:focus {
@@ -552,6 +553,7 @@ form textarea::placeholder {
 
 article.primary form textarea {
   border-bottom: 0.1rem solid var(--background-color-dim);
+  color: var(--background-color);
 }
 
 article.primary form textarea:focus {
